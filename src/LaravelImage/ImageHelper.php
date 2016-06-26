@@ -4,14 +4,16 @@ namespace LaravelImage;
 
 class ImageHelper
 {
-    /** @var array $defaults Default attributes */
-    protected $defaults = [
-        'fit'     => 'crop-center',
-        'alt'     => '',
-        'class'   => null,
-        'urlOnly' => false,
+    /** @var array $attributes Default attributes */
+    protected $attributes = [
+        'alt'   => '',
+        'class' => null,
     ];
-    
+
+    protected $options = [
+        'fit' => 'crop-center',
+    ];
+
     /**
      * @param $dir Directory to search
      * @param $image Image name
@@ -20,11 +22,12 @@ class ImageHelper
      * @param array $options
      * @return string
      */
-    public function image($dir, $image, $width = null, $height = null, array $options = [])
+    public function image($dir, $image, $width = null, $height = null, array $options = [], array $attributes = [])
     {
-        $options = array_merge($this->defaults, $options);
+        $attributes = array_replace_recursive($this->attributes, $attributes);
+        $options = array_replace_recursive($this->options, $options);
 
-        $path = '/laravel-image/' . $dir . $image . '?fit=' . $options['fit'];
+        $path = '/laravel-image/' . $dir . $image . '?' . http_build_query($options, '', '&');
 
         if ( ! empty((int)$width)) {
             $path .= '&w=' . (int)$width;
@@ -34,16 +37,7 @@ class ImageHelper
             $path .= '&h=' . (int)$height;
         }
 
-        if ($options['urlOnly']) {
-            return asset($path);
-        }
-
-        $class = '';
-        if ( ! empty($options['class'])) {
-            $class = 'class="' . $options['class'] . '"';
-        }
-
-        return '<img src="' . asset($path) . '" alt="' . $options['alt'] . '" ' . $class . ' />';
+        return '<img src="' . asset($path) . '" ' . http_build_query($attributes, '', ' ') . ' />';
     }
 
     /**
@@ -59,6 +53,7 @@ class ImageHelper
         }
 
         return $this->image($options[0], $options[1], (isset($options[2]) ? $options[2] : null),
-            (isset($options[3]) ? $options[3] : null), (isset($options[4]) ? $options[4] : null));
+            (isset($options[3]) ? $options[3] : null), (! empty($options[4]) ? $options[4] : []),
+            (! empty($options[5]) ? $options[5] : []));
     }
 }

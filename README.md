@@ -105,14 +105,16 @@ Create image of custom size at runtime
 @laravelImage($uploadDir, $imageName, 300, 200)
 ```
 
-Options
+Options & attributes
 ```html
-<-- @laravelImage(uploadDir, imageName, width, height, options) -->
+<-- @laravelImage(uploadDir, imageName, width, height, options, attributes) -->
 @laravelImage($uploadDir, $imageName, 300, 200, [
     'fit' => 'crop-center',
+    'filt' => 'sepia'
+], [
     'alt' => 'Alt text of an image',
     'class' => 'custom-class'
 ])
 ```
 
-> Fit option accepts crop-top-left, crop-top, crop-top-right, crop-left, crop-center, crop-right, crop-bottom-left, crop-bottom or crop-bottom-right
+> See [thephpleague/glide](http://glide.thephpleague.com/) for more info on options.
