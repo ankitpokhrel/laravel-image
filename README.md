@@ -15,12 +15,6 @@ Include the service provider within `config/app.php`.
 LaravelImage\ImageUploadServiceProvider::class
 ```
 
-And, for convenience, add a facade alias to this same file at the bottom:
-
-```php
-'ImageHelper' => LaravelImage\Image::class
-```
-
 Finally publish the configuration
 ```php
 php artisan vendor:publish --provider="LaravelImage\ImageUploadServiceProvider"
