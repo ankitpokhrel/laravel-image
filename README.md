@@ -114,7 +114,7 @@ Create image of custom size at runtime
 Options
 ```html
 <-- @laravelImage(uploadDir, imageName, width, height, options) -->
-@laravelImage($user->upload_dir, $user->image, 300, 200, [
+@laravelImage($uploadDir, $imageName, 300, 200, [
     'fit' => 'crop-center',
     'alt' => 'Alt text of an image',
     'class' => 'custom-class'
