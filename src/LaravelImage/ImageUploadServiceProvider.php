@@ -21,7 +21,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../config/config.php' => config_path('laravelimage.php'),
+            __DIR__ . '/../config/config.php' => config_path('laravel-image.php'),
         ]);
 
         $this->registerBladeExtensions();
