@@ -4,7 +4,7 @@ namespace LaravelImage;
 
 use Illuminate\Support\Facades\Facade;
 
-class LaravelImage extends Facade
+class LaravelImageFacade extends Facade
 {
     /**
      * Get the binding in the IoC container.

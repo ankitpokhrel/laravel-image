@@ -4,11 +4,9 @@ namespace LaravelImage;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
 
 /**
  * Handles all image upload operation
- * along with thumbnail creation.
  *
  * @author Ankit Pokhrel
  */
@@ -32,9 +30,6 @@ class ImageUploadService
     /** @var array Uploaded file info */
     protected $uploadedFileInfo = [];
 
-    /** @var array Registered thumbnail sizes */
-    protected $thumbnailSizes;
-
     /** @var string Image validation rules */
     protected $validationRules;
 
@@ -47,10 +42,8 @@ class ImageUploadService
     public function __construct()
     {
         /*
-         * Default thumbnail sizes
+         * Default validation rules
          */
-        $this->thumbnailSizes = config('laravelimage.thumbSizes');
-
         $this->validationRules = config('laravelimage.validationRules');
     }
 
@@ -138,41 +131,6 @@ class ImageUploadService
     }
 
     /**
-     * Register thumbnail size to generate.
-     *
-     * @param array $thumbnails
-     */
-    public function registerThumbnails(array $thumbnails)
-    {
-        $this->thumbnailSizes = $thumbnails;
-    }
-
-    /**
-     * Generate registered thumbnails.
-     *
-     * @param $file
-     */
-    private function generateThumbnails($file)
-    {
-        if ( ! $this->thumbnailSizes) {
-            return;
-        }
-
-        foreach ($this->thumbnailSizes as $key => $thumb) {
-            if (isset($thumb['crop']) && (bool)$thumb['crop']) {
-                $img = Image::make($this->destination . $file)->resize($thumb['w'], $thumb['h']);
-            } else {
-                $img = Image::make($this->destination . $file)->resize($thumb['w'], null,
-                    function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-            }
-
-            $img->save($this->destination . $key . '_' . $file);
-        }
-    }
-
-    /**
      * Perform image validation.
      *
      * @param $file
@@ -227,9 +185,6 @@ class ImageUploadService
                 'mime_type'           => $mimeType,
             ];
 
-            //generate thumbnail if any
-            $this->generateThumbnails($encryptedFileName);
-
             return true;
         }
 
@@ -268,8 +223,8 @@ class ImageUploadService
     public function getUniqueFilename($filename)
     {
         $uniqueName = uniqid();
-        $fileext = explode('.', $filename);
-        $mimeType = end($fileext);
+        $fileExt = explode('.', $filename);
+        $mimeType = end($fileExt);
         $filename = $uniqueName . '.' . $mimeType;
 
         return $filename;

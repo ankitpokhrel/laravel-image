@@ -3,29 +3,13 @@
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Default Thumbnail Sizes
-    |--------------------------------------------------------------------------
-    |
-    | This option registers the default thumbnail sizes that gets used while
-    | creating image thumbs after upload.
-    |
-    | Options: 'w', 'h', 'crop'
-    */
-    'thumbSizes'         => [
-        'large'  => [
-            'w' => 800, //width of image
-            'h' => 600, //height of image
-        ],
-        'medium' => [
-            'w' => 500,
-            'h' => 350,
-        ],
-        'thumb'  => [
-            'w' => 150,
-            'h' => 150,
-        ],
-    ],
+     |--------------------------------------------------------------------------
+     | File upload directory
+     |--------------------------------------------------------------------------
+     |
+     | Your upload directory
+     */
+    'uploadDir' => public_path('uploads'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +26,7 @@ return [
     | Image Fields
     |--------------------------------------------------------------------------
     |
-    | Fields to treat as image fields. Require for validation.
+    | Fields to treat as image fields. Required for validation.
     */
     'imageFields'        => [
         'image',

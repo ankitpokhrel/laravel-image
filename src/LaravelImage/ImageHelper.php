@@ -2,56 +2,36 @@
 
 namespace LaravelImage;
 
-use Intervention\Image\Facades\Image;
-
 class ImageHelper
 {
     /** @var array $defaults Default attributes */
     protected $defaults = [
+        'fit'     => 'crop-center',
         'alt'     => '',
-        'size'    => null,
+        'class'   => null,
         'urlOnly' => false,
     ];
-
-    protected $thumbnailSizes;
-
-    public function __construct()
-    {
-        /*
-         * Default thumbnail sizes
-         */
-        $this->thumbnailSizes = config('laravelimage.thumbSizes');
-    }
-
+    
     /**
      * @param $dir Directory to search
      * @param $image Image name
+     * @param null $width
+     * @param null $height
      * @param array $options
-     *
      * @return string
      */
-    public function image($dir, $image, array $options = [])
+    public function image($dir, $image, $width = null, $height = null, array $options = [])
     {
         $options = array_merge($this->defaults, $options);
 
-        $size = $options['size'];
-        $path = $dir . $image;
-        if ( ! empty($size)) {
-            if (is_array($size)) {
-                $key = key($size);
-                $this->resizeImage($dir, $image, $size);
-            } else {
-                $key = $size;
-                $originalFile = public_path($dir) . $image;
-                $file = public_path($dir) . $key . '_' . $image;
-                if ( ! file_exists($file) && file_exists($originalFile) && isset($this->thumbnailSizes[$key])) {
-                    $this->resizeImage($dir, $image, [
-                        $key => $this->thumbnailSizes[$key],
-                    ]);
-                }
-            }
+        $path = '/laravel-image/' . $dir . $image . '?fit=' . $options['fit'];
 
-            $path = $dir . $key . '_' . $image;
+        if ( ! empty((int)$width)) {
+            $path .= '&w=' . (int)$width;
+        }
+
+        if ( ! empty((int)$height)) {
+            $path .= '&h=' . (int)$height;
         }
 
         if ($options['urlOnly']) {
@@ -74,38 +54,11 @@ class ImageHelper
      */
     public function picture(array $options)
     {
-        if (empty($options['dir']) || empty($options['image'])) {
+        if (empty($options[0]) || empty($options[1])) {
             throw new \InvalidArgumentException('LaravelImage: dir and image attributes are required..');
         }
 
-        return $this->image($options['dir'], $options['image'], $options['attributes']);
-    }
-
-    /**
-     * Resize image to specified size.
-     *
-     * @param $dir Image directory
-     * @param $image Actual image
-     * @param array $options Resize options
-     *
-     * @return mixed
-     */
-    private function resizeImage($dir, $image, array $options)
-    {
-        $key = key($options);
-        $width = $options[$key]['w'];
-        $height = $options[$key]['h'];
-        $crop = isset($options[$key]['crop']) ? (bool)$options[$key]['crop'] : false;
-
-        if ($crop) {
-            $img = Image::make(public_path($dir) . $image)->resize($width, $height);
-        } else {
-            $img = Image::make(public_path($dir) . $image)->resize($width, null,
-                function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-        }
-
-        return $img->save(public_path($dir) . $key . '_' . $image);
+        return $this->image($options[0], $options[1], (isset($options[2]) ? $options[2] : null),
+            (isset($options[3]) ? $options[3] : null), (isset($options[4]) ? $options[4] : null));
     }
 }

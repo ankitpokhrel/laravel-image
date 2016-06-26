@@ -98,30 +98,27 @@ public function update(Request $request, $id)
 }
 ```
 
-#### Using facade to display images
+#### Using blade directive to display images
 
-Display from already registered thumbnails. It will try to generate new thumb if registered thumbnail doesn't exist.
+Display full image
 ```html
-{!!
-    \LaravelImage\LaravelImage::image($model->file_path, $model->image, [
-        'alt' => $model->original_file_name,
-        'size' => 'thumb'
-    ])
-!!}
+@laravelImage($uploadDir, $imageName)
 ```
 
-Or, create image of custom size at runtime
+Create image of custom size at runtime
 ```html
-{!!
-    \LaravelImage\LaravelImage::image($model->file_path, $model->image, [
-        'alt' => $model->original_file_name,
-        'size' => [
-            'custom' => ['w' => 300, 'h' => 200, 'crop' => true]
-        ]
-    ])
-!!}
+<-- @laravelImage(uploadDir, imageName, width, height) -->
+@laravelImage($uploadDir, $imageName, 300, 200)
 ```
 
-## TODO
-- Image cache implementation
-- Complete documentation
+Options
+```html
+<-- @laravelImage(uploadDir, imageName, width, height, options) -->
+@laravelImage($user->upload_dir, $user->image, 300, 200, [
+    'fit' => 'crop-center',
+    'alt' => 'Alt text of an image',
+    'class' => 'custom-class'
+])
+```
+
+> Fit option accepts crop-top-left, crop-top, crop-top-right, crop-left, crop-center, crop-right, crop-bottom-left, crop-bottom or crop-bottom-right
