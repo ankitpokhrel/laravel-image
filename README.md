@@ -1,5 +1,6 @@
 # LARAVEL IMAGE
-Basic image upload and thumbnail management package for laravel 5.1
+Basic image upload and thumbnail management package for laravel 5.1. This package uses powerful libraries like
+[Glide](http://glide.thephpleague.com/) for on-demand image manipulation.
 
 ## Installation
 
@@ -109,7 +110,7 @@ Options & attributes
 ```html
 <-- @laravelImage(uploadDir, imageName, width, height, options, attributes) -->
 @laravelImage($uploadDir, $imageName, 300, 200, [
-    'fit' => 'crop-center',
+    'fit' => 'crop-top-left',
     'filt' => 'sepia'
 ], [
     'alt' => 'Alt text of an image',
@@ -117,4 +118,4 @@ Options & attributes
 ])
 ```
 
-> See [thephpleague/glide](http://glide.thephpleague.com/) for more info on options.
+> Options can be any glide options. See [thephpleague/glide](http://glide.thephpleague.com/) for more info on options.
