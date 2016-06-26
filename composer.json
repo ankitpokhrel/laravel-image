@@ -1,0 +1,26 @@
+{
+  "name": "ankitpokhrel/laravel-image",
+  "description": "Easy image upload and thumbnail management",
+  "version": "dev-master",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ankit Pokhrel",
+      "email": "ankitpokhrel@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~5.0",
+    "intervention/image": "^2.3"
+  },
+  "require-dev": {
+    "mockery/mockery": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "LaravelImage\\": "src/LaravelImage"
+    }
+  },
+  "minimum-stability": "stable"
+}
