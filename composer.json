@@ -24,5 +24,10 @@
       "LaravelImage\\": "src/LaravelImage"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelImage\\Tests\\": "tests"
+    }
+  },
   "minimum-stability": "stable"
 }
