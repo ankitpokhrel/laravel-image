@@ -15,7 +15,9 @@
     "league/glide-laravel": "^1.0"
   },
   "require-dev": {
-    "mockery/mockery": "dev-master"
+    "phpunit/phpunit": "4.8.0",
+    "mockery/mockery": "dev-master",
+    "squizlabs/php_codesniffer": "2.*"
   },
   "autoload": {
     "psr-4": {
