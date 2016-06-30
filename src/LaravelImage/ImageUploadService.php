@@ -38,13 +38,14 @@ class ImageUploadService
 
     /**
      * @constructor
+     * @param null $validationRules
      */
-    public function __construct()
+    public function __construct($validationRules = null)
     {
         /*
          * Default validation rules
          */
-        $this->validationRules = config('laravelimage.validationRules');
+        $this->validationRules = $validationRules or config('laravelimage.validationRules');
     }
 
     /**
@@ -100,13 +101,21 @@ class ImageUploadService
     }
 
     /**
-     * Enable or disable public path.
-     *
-     * @param $bool
-     */
-    public function publicPath($bool)
+ * Enable or disable public path.
+ *
+ * @param $bool
+ */
+    public function setPublicPath($bool)
     {
         $this->publicPath = $bool;
+    }
+
+    /**
+     * Get public path.
+     */
+    public function getPublicPath()
+    {
+        return $this->publicPath;
     }
 
     /**
@@ -128,6 +137,14 @@ class ImageUploadService
     public function setValidationRules($rules)
     {
         $this->validationRules = $rules;
+    }
+
+    /**
+     * Get validation rules.
+     */
+    public function getValidationRules()
+    {
+        return $this->validationRules;
     }
 
     /**
