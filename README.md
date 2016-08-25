@@ -26,7 +26,7 @@ php artisan vendor:publish --provider="LaravelImage\ImageUploadServiceProvider"
 ```
 
 ## Configuration
-You can add default thumbnail configuration to `config/laravel-image.php`.
+You can add default thumbnail configuration to `config/laravelimage.php`.
 
 ## Usage
 
