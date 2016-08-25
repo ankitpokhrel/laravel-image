@@ -27,7 +27,7 @@ class ImageHelper
         $attributes = array_replace_recursive($this->attributes, $attributes);
         $options = array_replace_recursive($this->options, $options);
 
-        $path = '/laravel-image/' . $dir . $image . '?' . http_build_query($options, '', '&');
+        $path = config('laravelimage.routePath') . '/' . $dir . $image . '?' . http_build_query($options, '', '&');
 
         if ( ! empty((int)$width)) {
             $path .= '&w=' . (int)$width;
