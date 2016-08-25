@@ -123,3 +123,12 @@ Options & attributes
 ```
 
 > Options can be any glide options. See [thephpleague/glide](http://glide.thephpleague.com/) for more info on options.
+
+### Displaying image without blade
+ 
+ Image source should be in the format `laravelimage.routePath/uploadDir/image?options`, where `laravelimage.routePath` is from configuration file.
+ So if you set your `routePath` to `cache`, the image url will be something like this.
+
+```html
+<img src="/cache/{{ $uploadDir . $image  }}?w=128&fit=crop-center" alt="" />
+```
