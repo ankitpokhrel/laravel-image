@@ -20,12 +20,13 @@ class ImageHelper
      * @param null $width
      * @param null $height
      * @param array $options
+     *
      * @return string
      */
     public function image($dir, $image, $width = null, $height = null, array $options = [], array $attributes = [])
     {
         $attributes = array_replace_recursive($this->attributes, $attributes);
-        $options = array_replace_recursive($this->options, $options);
+        $options    = array_replace_recursive($this->options, $options);
 
         $path = config('laravelimage.routePath') . '/' . $dir . $image . '?' . http_build_query($options, '', '&');
 
@@ -44,6 +45,7 @@ class ImageHelper
      * Wrapper around image method.
      *
      * @param array $options
+     *
      * @return string
      */
     public function picture(array $options)

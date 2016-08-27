@@ -46,7 +46,7 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     protected function registerGlide()
     {
-        $this->app->singleton('\League\Glide\Server', function($app) {
+        $this->app->singleton('\League\Glide\Server', function ($app) {
 
             $fileSystem = $app->make(Filesystem::class);
 
@@ -63,10 +63,10 @@ class ImageUploadServiceProvider extends ServiceProvider
 
             // Setup glide server
             return ServerFactory::create([
-                'source' => $source,
-                'cache' => $cache,
+                'source'   => $source,
+                'cache'    => $cache,
                 'base_url' => config('laravelimage.routePath') . '/' . basename($uploadDir),
-                'response' => new LaravelResponseFactory()
+                'response' => new LaravelResponseFactory(),
             ]);
         });
     }
@@ -79,7 +79,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->directive('laravelImage', function ($options) {
-            return "<?php echo \LaravelImage\LaravelImageFacade::picture(array $options);?>";
+            return "<?php echo \LaravelImage\LaravelImageFacade::picture($options);?>";
         });
     }
 }

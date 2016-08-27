@@ -14,34 +14,34 @@ class ImageUploadService
 {
     /** @var string Image field */
     protected $field = 'image';
-    
+
     /** @var string Upload dir */
     protected $uploadDir = 'upload_dir';
-    
+
     /** @var string Original image name field */
     protected $originalImageNameField = 'original_image_name';
-    
+
     /** @var string Upload base path */
     protected $basePath = 'uploads/';
-    
+
     /** @var bool Relative path to upload dir */
     protected $uploadPath = '';
-    
+
     /** @var bool Is file uploaded in public dir? */
     protected $publicPath = true;
-    
+
     /** @var string File save destination */
     protected $destination = '';
-    
+
     /** @var array Uploaded file info */
     protected $uploadedFileInfo = [];
-    
+
     /** @var string Image validation rules */
     protected $validationRules;
-    
+
     /** @var array|object Validation errors */
     protected $errors = [];
-    
+
     /**
      * @constructor
      *
@@ -54,7 +54,7 @@ class ImageUploadService
          */
         $this->validationRules = $validationRules ? $validationRules : config('laravelimage.validationRules');
     }
-    
+
     /**
      * Get uploaded file info.
      *
@@ -64,7 +64,7 @@ class ImageUploadService
     {
         return $this->uploadedFileInfo;
     }
-    
+
     /**
      * Set upload field.
      *
@@ -74,7 +74,7 @@ class ImageUploadService
     {
         $this->field = $fieldName;
     }
-    
+
     /**
      * get upload field.
      *
@@ -84,7 +84,7 @@ class ImageUploadService
     {
         return $this->field;
     }
-    
+
     /**
      * Set upload directory.
      *
@@ -94,7 +94,7 @@ class ImageUploadService
     {
         $this->uploadDir = $dir;
     }
-    
+
     /**
      * get upload directory.
      *
@@ -104,7 +104,7 @@ class ImageUploadService
     {
         return $this->dir;
     }
-    
+
     /**
      * Set original image name field.
      *
@@ -114,7 +114,7 @@ class ImageUploadService
     {
         $this->originalImageNameField = $originalImageName;
     }
-    
+
     /**
      * get original image name field.
      *
@@ -124,7 +124,7 @@ class ImageUploadService
     {
         return $this->originalImageNameField;
     }
-    
+
     /**
      * Set base path.
      *
@@ -136,7 +136,7 @@ class ImageUploadService
         $this->basePath   = $path;
         $this->publicPath = $publicPath;
     }
-    
+
     /**
      * Get base path.
      *
@@ -146,7 +146,7 @@ class ImageUploadService
     {
         return $this->basePath;
     }
-    
+
     /**
      * Enable or disable public path.
      *
@@ -156,7 +156,7 @@ class ImageUploadService
     {
         $this->publicPath = $bool;
     }
-    
+
     /**
      * Get public path.
      */
@@ -164,7 +164,7 @@ class ImageUploadService
     {
         return $this->publicPath;
     }
-    
+
     /**
      * @param $folder
      */
@@ -177,7 +177,7 @@ class ImageUploadService
             $this->destination = $this->uploadPath;
         }
     }
-    
+
     /**
      * @param $rules
      */
@@ -185,7 +185,7 @@ class ImageUploadService
     {
         $this->validationRules = $rules;
     }
-    
+
     /**
      * Get validation rules.
      */
@@ -193,7 +193,7 @@ class ImageUploadService
     {
         return $this->validationRules;
     }
-    
+
     /**
      * Perform image validation.
      *
@@ -207,21 +207,21 @@ class ImageUploadService
         if ( ! $file->isValid()) {
             return false;
         }
-        
+
         $inputFile = [$this->field => $file];
         $rules     = [$this->field => $this->validationRules];
-        
+
         // Validate
         $validator = Validator::make($inputFile, $rules);
         if ($validator->fails()) {
             $this->errors = $validator;
-            
+
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * Uploads file to required destination.
      *
@@ -230,19 +230,19 @@ class ImageUploadService
     public function upload()
     {
         $file = Input::file($this->field);
-    
-        if (file_exists(public_path($this->uploadDir.$file->getClientOriginalName()))) {
-            
+
+        if (file_exists(public_path($this->uploadDir . $file->getClientOriginalName()))) {
+
         }
-        
+
         if ( ! $this->validate($file)) {
             return false;
         }
-        
+
         $originalFileName  = $file->getClientOriginalName();
         $encryptedFileName = $this->getUniqueFilename($originalFileName);
         $mimeType          = $file->getMimeType();
-        
+
         $size = $file->getSize();
         if ($file->move($this->destination, $encryptedFileName)) {
             $this->uploadedFileInfo = [
@@ -253,13 +253,13 @@ class ImageUploadService
                 'extension'                   => $file->getClientOriginalExtension(),
                 'mime_type'                   => $mimeType,
             ];
-            
+
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * @return array|object
      */
@@ -267,7 +267,7 @@ class ImageUploadService
     {
         return $this->errors;
     }
-    
+
     /**
      * Clear out a folder and its content.
      *
@@ -281,7 +281,7 @@ class ImageUploadService
             rmdir($folder);
         }
     }
-    
+
     /**
      * function to generate unique filename for images.
      *
@@ -295,10 +295,10 @@ class ImageUploadService
         $fileExt    = explode('.', $filename);
         $mimeType   = end($fileExt);
         $filename   = $uniqueName . '.' . $mimeType;
-        
+
         return $filename;
     }
-    
+
     /**
      * Generate a random UUID for folder name (version 4).
      *

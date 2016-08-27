@@ -9,8 +9,8 @@ return [
      |
      | Your upload directory
      */
-    'uploadDir' => public_path('uploads'),
-    
+    'uploadDir'          => public_path('uploads'),
+
     /*
      |--------------------------------------------------------------------------
      | Route prefix
@@ -18,7 +18,7 @@ return [
      |
      | Your route prefix for glide
      */
-    'routePath' => 'laravel-image',
+    'routePath'          => 'laravel-image',
 
     /*
     |--------------------------------------------------------------------------

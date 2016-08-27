@@ -23,7 +23,7 @@ class ImageValidationRequest extends Request
      */
     public function rules()
     {
-        $imageFields = config('laravelimage.imageFields');
+        $imageFields    = config('laravelimage.imageFields');
         $validationRule = config('laravelimage.validationRules');
 
         $rules = [];
