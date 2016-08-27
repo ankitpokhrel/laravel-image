@@ -19,12 +19,12 @@ composer require "ankitpokhrel/laravel-image":"dev-master"
 Include the service provider within `config/app.php`.
 
 ```php
-LaravelImage\ImageUploadServiceProvider::class
+AnkitPokhrel\LaravelImage\ImageUploadServiceProvider::class
 ```
 
 Finally publish the configuration
 ```php
-php artisan vendor:publish --provider="LaravelImage\ImageUploadServiceProvider"
+php artisan vendor:publish --provider="AnkitPokhrel\LaravelImage\ImageUploadServiceProvider"
 ```
 
 ## Configuration
