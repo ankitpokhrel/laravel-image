@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelImage\Tests;
+namespace AnkitPokhrel\LaravelImage\Tests;
 
 use \Mockery as m;
 
@@ -14,7 +14,7 @@ class ImageUploadServiceTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $uploadService = m::mock('\LaravelImage\ImageUploadService[_construct]', ['mimes:jpeg,jpg,png|max:2048']);
+        $uploadService = m::mock('\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]', ['mimes:jpeg,jpg,png|max:2048']);
 
         $this->uploadService = $uploadService;
     }

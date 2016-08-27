@@ -21,12 +21,12 @@
   },
   "autoload": {
     "psr-4": {
-      "LaravelImage\\": "src/LaravelImage"
+      "AnkitPokhrel\\LaravelImage\\": "src/LaravelImage"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "LaravelImage\\Tests\\": "tests"
+      "AnkitPokhrel\\LaravelImage\\Tests\\": "tests"
     }
   },
   "minimum-stability": "stable"

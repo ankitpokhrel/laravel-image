@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelImage;
+namespace AnkitPokhrel\LaravelImage;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -32,10 +32,10 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('LaravelImage\ImageUploadService');
+        $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService');
 
         $this->app->singleton('laravelImage', function () {
-            return $this->app->make('LaravelImage\ImageHelper');
+            return $this->app->make('\AnkitPokhrel\LaravelImage\ImageHelper');
         });
 
         $this->registerGlide();
@@ -79,7 +79,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->directive('laravelImage', function ($options) {
-            return "<?php echo \LaravelImage\LaravelImageFacade::picture($options);?>";
+            return "<?php echo \AnkitPokhrel\LaravelImage\LaravelImageFacade::picture($options);?>";
         });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelImage;
+namespace AnkitPokhrel\LaravelImage;
 
 use App\Http\Requests\Request;
 
