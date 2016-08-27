@@ -230,11 +230,6 @@ class ImageUploadService
     public function upload()
     {
         $file = Input::file($this->field);
-
-        if (file_exists(public_path($this->uploadDir . $file->getClientOriginalName()))) {
-
-        }
-
         if ( ! $this->validate($file)) {
             return false;
         }
