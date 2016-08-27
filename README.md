@@ -6,6 +6,8 @@
 Basic image upload and thumbnail management package for laravel 5.1. This package uses powerful libraries like
 [Glide](http://glide.thephpleague.com/) for on-demand image manipulation.
 
+> THIS PACKAGE IS NOT YET PRODUCTION READY
+
 ## Installation
 
 Pull the package via composer
@@ -124,7 +126,7 @@ Options & attributes
 
 > Options can be any glide options. See [thephpleague/glide](http://glide.thephpleague.com/) for more info on options.
 
-### Displaying image without blade
+#### Displaying image without blade
  
  Image source should be in the format `laravelimage.routePath/uploadDir/image?options`, where `laravelimage.routePath` is from configuration file.
  So if you set your `routePath` to `cache`, the image url will be something like this.
