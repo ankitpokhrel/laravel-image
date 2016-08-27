@@ -79,7 +79,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->directive('laravelImage', function ($options) {
-            return "<?php echo \AnkitPokhrel\LaravelImage\LaravelImageFacade::picture($options);?>";
+            return "<?php echo \\AnkitPokhrel\\LaravelImage\\LaravelImageFacade::picture(array $options);?>";
         });
     }
 }
