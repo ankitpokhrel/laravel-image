@@ -39,19 +39,19 @@ class ContentsController extends Controller
 {
     ...
 
-    protected $file;
+    protected $image;
 
     /**
-     * @param ImageUploadService $file
+     * @param ImageUploadService $image
      */
-    public function __construct(ImageUploadService $file)
+    public function __construct(ImageUploadService $image)
     {
         ...
 
         //set properties for file upload
-        $this->file = $file;
-        $this->file->setUploadField('image'); //default is image
-        $this->file->setUploadFolder('contents'); //default is public/uploads/contents
+        $this->image = $image;
+        $this->image->setUploadField('image'); //default is image
+        $this->image->setUploadFolder('contents'); //default is public/uploads/contents
     }
 
     ...
@@ -67,9 +67,9 @@ public function store(ContentRequest $request)
 {
     $input = $request->all();
 
-    if (Input::hasFile('image') && $this->file->upload()) {
-        //file is uploaded, get uploaded file info
-        $uploadedFileInfo = $this->file->getUploadedFileInfo();
+    if (Input::hasFile('image') && $this->image->upload()) {
+        //image is uploaded, get uploaded image info
+        $uploadedFileInfo = $this->image->getUploadedFileInfo();
 
         ...
         //do whatever you like with the information
@@ -86,12 +86,12 @@ public function update(Request $request, $id)
 {
     ...
 
-    if (Input::hasFile('image') && $this->file->upload()) {
+    if (Input::hasFile('image') && $this->image->upload()) {
         ...
 
         //remove old files
         if ( ! empty($model->file_path)) {
-            $this->file->clean(public_path($model->file_path), true);
+            $this->image->clean(public_path($model->file_path), true);
         }
     }
 
