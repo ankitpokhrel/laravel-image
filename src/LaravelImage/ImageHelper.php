@@ -40,22 +40,4 @@ class ImageHelper
 
         return '<img src="' . asset($path) . '" ' . http_build_query($attributes, '', ' ') . ' />';
     }
-
-    /**
-     * Wrapper around image method.
-     *
-     * @param array $options
-     *
-     * @return string
-     */
-    public function picture(array $options)
-    {
-        if (empty($options[0]) || empty($options[1])) {
-            throw new \InvalidArgumentException('LaravelImage: dir and image attributes are required..');
-        }
-
-        return $this->image($options[0], $options[1], (isset($options[2]) ? $options[2] : null),
-            (isset($options[3]) ? $options[3] : null), (! empty($options[4]) ? $options[4] : []),
-            (! empty($options[5]) ? $options[5] : []));
-    }
 }
