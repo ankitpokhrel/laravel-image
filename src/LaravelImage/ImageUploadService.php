@@ -49,10 +49,11 @@ class ImageUploadService
      */
     public function __construct($validationRules = null)
     {
-        /*
-         * Default validation rules
-         */
+        // Default validation rules
         $this->validationRules = $validationRules ? $validationRules : config('laravelimage.validationRules');
+
+        // Set default upload folder
+        $this->setUploadFolder('contents');
     }
 
     /**
