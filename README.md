@@ -10,6 +10,8 @@ Basic image upload and thumbnail management package for laravel 5.1. This packag
 
 ## Installation
 
+> For 5.1 use [5.1](https://github.com/ankitpokhrel/laravel-image/tree/5.1) branch.
+
 Pull the package via composer
 
 ```php
