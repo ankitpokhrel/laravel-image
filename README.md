@@ -3,8 +3,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/ankitpokhrel/laravel-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/laravel-image)
 
-Basic image upload and thumbnail management package for laravel 5.1. This package uses powerful libraries like
-[Glide](http://glide.thephpleague.com/) for on-demand image manipulation.
+Basic image upload and thumbnail management package for laravel 5+. This package uses [Glide](http://glide.thephpleague.com/) library from the php league for on-demand image manipulation.
 
 > THIS PACKAGE IS NOT YET PRODUCTION READY
 
