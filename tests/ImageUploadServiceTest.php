@@ -5,7 +5,7 @@ namespace AnkitPokhrel\LaravelImage\Tests;
 use AnkitPokhrel\LaravelImage\ImageUploadService;
 use \Mockery as m;
 
-class ImageUploadServiceTest extends \PHPUnit_Framework_TestCase
+class ImageUploadServiceTest extends TestCase
 {
     public static $functions;
 
