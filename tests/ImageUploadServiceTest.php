@@ -4,6 +4,7 @@ namespace AnkitPokhrel\LaravelImage\Tests;
 
 use AnkitPokhrel\LaravelImage\ImageUploadService;
 use \Mockery as m;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageUploadServiceTest extends TestCase
 {
@@ -11,12 +12,16 @@ class ImageUploadServiceTest extends TestCase
 
     protected $uploadService;
 
+    protected $testImage;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->uploadService = m::mock('\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]',
             ['mimes:jpeg,jpg,png|max:2048']);
+
+        $this->testImage = __DIR__ . '/img/ankit.png';
     }
 
     /**
@@ -124,6 +129,45 @@ class ImageUploadServiceTest extends TestCase
         }
 
         $this->assertEquals(25, count(array_unique($files)));
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::validate
+     */
+    public function validate_file_with_right_params()
+    {
+        $file = new UploadedFile(
+            $this->testImage,
+            'ankit.png',
+            'image/png',
+            filesize($this->testImage),
+            null,
+            true
+        );
+
+        $this->assertTrue($this->uploadService->validate($file));
+    }
+
+    /**
+     * @test
+     *
+     * @covers       ImageUploadService::validate
+     * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::invalidFileOptions
+     */
+    public function validate_fails_for_invalid_params($size, $type)
+    {
+        $file = new UploadedFile(
+            $this->testImage,
+            'ankit.png',
+            $type,
+            $size,
+            null,
+            false
+        );
+
+        $this->assertFalse($this->uploadService->validate($file));
     }
 
     public function tearDown()
