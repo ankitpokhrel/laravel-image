@@ -180,6 +180,16 @@ class ImageUploadService
     }
 
     /**
+     * Get upload path
+     *
+     * @return string
+     */
+    public function getUploadPath()
+    {
+        return $this->uploadPath;
+    }
+
+    /**
      * @param $rules
      */
     public function setValidationRules($rules)
@@ -244,7 +254,7 @@ class ImageUploadService
             $this->uploadedFileInfo = [
                 $this->originalImageNameField => $originalFileName,
                 $this->field                  => $encryptedFileName,
-                $this->uploadDir              => $this->uploadPath,
+                $this->uploadDir              => $this->getUploadPath(),
                 'size'                        => $size,
                 'extension'                   => $file->getClientOriginalExtension(),
                 'mime_type'                   => $mimeType,

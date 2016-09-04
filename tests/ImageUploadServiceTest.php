@@ -3,6 +3,8 @@
 namespace AnkitPokhrel\LaravelImage\Tests;
 
 use AnkitPokhrel\LaravelImage\ImageUploadService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use \Mockery as m;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -12,16 +14,18 @@ class ImageUploadServiceTest extends TestCase
 
     protected $uploadService;
 
-    protected $testImage;
+    protected $validationRules = ['mimes:jpeg,jpg,png|max:2048'];
+
+    protected $testImage = __DIR__ . '/img/ankit.png';
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->uploadService = m::mock('\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]',
-            ['mimes:jpeg,jpg,png|max:2048']);
-
-        $this->testImage = __DIR__ . '/img/ankit.png';
+        $this->uploadService = m::mock(
+            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]',
+            $this->validationRules
+        );
     }
 
     /**
@@ -168,6 +172,58 @@ class ImageUploadServiceTest extends TestCase
         );
 
         $this->assertFalse($this->uploadService->validate($file));
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::upload
+     * @covers ImageUploadService::getUploadPath
+     * @covers ImageUploadService::getUniqueFilename
+     */
+    public function image_is_uploaded_if_right_params_is_provided()
+    {
+        $file = new UploadedFile(
+            $this->testImage,
+            'ankit.png',
+            'image/png',
+            filesize($this->testImage),
+            null,
+            true
+        );
+
+        $imageName = '57cbcd31b0fde.png';
+        $uploadDir = 'uploads/contents/639bd5bc-3dec-4bbf-af19-201931d1d0c2/';
+
+        //mock input
+        $input = m::mock(Request::class);
+        $input->shouldReceive('setUserResolver')
+              ->shouldReceive('file')
+              ->andReturn($file);
+
+        Input::swap($input);
+
+        //mock upload service with required methods
+        $uploadServiceMock = m::mock(
+            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct,getUniqueFilename,getUploadPath]',
+            $this->validationRules
+        );
+
+        $uploadServiceMock
+            ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
+            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
+
+        $expected = [
+            "original_image_name" => 'ankit.png',
+            "image"               => $imageName,
+            "upload_dir"          => $uploadDir,
+            "size"                => filesize($this->testImage),
+            "extension"           => 'png',
+            "mime_type"           => 'image/png',
+        ];
+
+        $this->assertTrue($uploadServiceMock->upload());
+        $this->assertEquals($expected, $uploadServiceMock->getUploadedFileInfo());
     }
 
     public function tearDown()
