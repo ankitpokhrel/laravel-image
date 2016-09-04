@@ -31,6 +31,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
+     * @covers ImageUploadService::setUploadField
      * @covers ImageUploadService::getUploadField
      */
     public function set_upload_field()
@@ -46,6 +47,23 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
+     * @covers ImageUploadService::setUploadDir
+     * @covers ImageUploadService::getUploadDir
+     */
+    public function set_upload_dir()
+    {
+        //test default value
+        $this->assertEquals('upload_dir', $this->uploadService->getUploadDir());
+
+        //test custom value
+        $this->uploadService->setUploadDir('custom_upload_dir');
+        $this->assertEquals('custom_upload_dir', $this->uploadService->getUploadDir());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::setValidationRules
      * @covers ImageUploadService::getValidationRules
      */
     public function set_validation_rules()
@@ -77,8 +95,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
+     * @covers ImageUploadService::setPublicPath
      * @covers ImageUploadService::getPublicPath
-     * @covers ImageUploadService::setBasePath
      */
     public function set_public_path()
     {
@@ -88,6 +106,39 @@ class ImageUploadServiceTest extends TestCase
         //test custom value
         $this->uploadService->setBasePath('custom_uploads/', false);
         $this->assertFalse($this->uploadService->getPublicPath());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::setUploadFolder
+     * @covers ImageUploadService::getUploadPath
+     */
+    public function set_upload_folder()
+    {
+        $regex = '/^uploads\/contents\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
+        $this->assertRegexp($regex, $this->uploadService->getUploadPath());
+
+        $this->uploadService->setUploadFolder('users');
+
+        $regex = '/^uploads\/users\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
+        $this->assertRegexp($regex, $this->uploadService->getUploadPath());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::setOriginalImageNameField
+     * @covers ImageUploadService::getOriginalImageNameField
+     */
+    public function set_original_image_name_field()
+    {
+        //test default value
+        $this->assertEquals('original_image_name', $this->uploadService->getOriginalImageNameField());
+
+        //test custom value
+        $this->uploadService->setOriginalImageNameField('custom_original_image_name');
+        $this->assertEquals('custom_original_image_name', $this->uploadService->getOriginalImageNameField());
     }
 
     /**
@@ -180,6 +231,7 @@ class ImageUploadServiceTest extends TestCase
      * @covers ImageUploadService::upload
      * @covers ImageUploadService::getUploadPath
      * @covers ImageUploadService::getUniqueFilename
+     * @covers ImageUploadService::getUploadedFileInfo
      */
     public function image_is_uploaded_if_right_params_is_provided()
     {
