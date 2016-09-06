@@ -16,8 +16,6 @@ class ImageUploadServiceTest extends TestCase
 
     protected $validationRules = ['mimes:jpeg,jpg,png|max:2048'];
 
-    protected $testImage = __DIR__ . '/img/ankit.png';
-
     public function setUp()
     {
         parent::setUp();
