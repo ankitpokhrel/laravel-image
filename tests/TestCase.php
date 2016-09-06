@@ -14,6 +14,17 @@ class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        copy($this->sample, $this->testImage);
+        if ( ! file_exists($this->testImage)) {
+            copy($this->sample, $this->testImage);
+        }
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        if (file_exists($this->testImage)) {
+            unlink($this->testImage);
+        }
     }
 }

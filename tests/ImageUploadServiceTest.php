@@ -229,9 +229,58 @@ class ImageUploadServiceTest extends TestCase
      * @covers ImageUploadService::upload
      * @covers ImageUploadService::getUploadPath
      * @covers ImageUploadService::getUniqueFilename
+     * @covers ImageUploadService::getValidationErrors
+     */
+    public function upload_return_errors_for_invalid_params()
+    {
+        $file = new UploadedFile(
+            $this->testImage,
+            'ankit.png',
+            'image/png',
+            filesize($this->testImage),
+            null,
+            true
+        );
+
+        $imageName = '57cbcd31b0fde.png';
+        $uploadDir = 'uploads/contents/639bd5bc-3dec-4bbf-af19-201931d1d0c2/';
+
+        //mock input
+        $input = m::mock(Request::class);
+        $input->shouldReceive('setUserResolver')
+              ->shouldReceive('file')
+              ->andReturn($file);
+
+        Input::swap($input);
+
+        //mock upload service with required methods
+        $uploadServiceMock = m::mock(
+            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct,getUniqueFilename,getUploadPath]',
+            ['mimes:jpeg,jpg|max:30']
+        );
+
+        $uploadServiceMock
+            ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
+            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
+
+        $expected = [
+            0 => 'The image must be a file of type: jpeg, jpg.',
+            1 => 'The image may not be greater than 30 kilobytes.',
+        ];
+
+        $this->assertFalse($uploadServiceMock->upload());
+        $this->assertEquals($expected, $uploadServiceMock->getValidationErrors()->messages()->all());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::upload
+     * @covers ImageUploadService::getUploadPath
+     * @covers ImageUploadService::getUniqueFilename
      * @covers ImageUploadService::getUploadedFileInfo
      */
-    public function image_is_uploaded_if_right_params_is_provided()
+    public function image_is_uploaded_if_right_params_are_provided()
     {
         $file = new UploadedFile(
             $this->testImage,
@@ -261,7 +310,8 @@ class ImageUploadServiceTest extends TestCase
 
         $uploadServiceMock
             ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
-            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
+            ->shouldReceive('getUploadPath')->andReturn($uploadDir)
+            ->shouldReceive('setUploadFolder')->withAnyArgs()->andReturn($uploadDir);
 
         $expected = [
             "original_image_name" => 'ankit.png',
@@ -278,6 +328,8 @@ class ImageUploadServiceTest extends TestCase
 
     public function tearDown()
     {
+        parent::tearDown();
+
         m::close();
     }
 }
