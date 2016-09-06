@@ -1,6 +1,7 @@
 # LARAVEL IMAGE
 [![Latest Version](https://img.shields.io/github/release/ankitpokhrel/laravel-image.svg?style=flat-square)](https://github.com/ankitpokhrel/laravel-image/releases)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/laravel-image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/laravel-image/?branch=master)
+[![Travis Build](https://img.shields.io/travis/ankitpokhrel/laravel-image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/laravel-image)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/ankitpokhrel/laravel-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/laravel-image)
 
