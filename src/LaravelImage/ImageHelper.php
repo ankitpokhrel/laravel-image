@@ -6,7 +6,7 @@ class ImageHelper
 {
     /** @var array $attributes Default attributes */
     protected $attributes = [
-        'alt'   => '',
+        'alt'   => null,
         'class' => null,
     ];
 
@@ -30,14 +30,33 @@ class ImageHelper
 
         $path = config('laravelimage.routePath') . '/' . $dir . $image . '?' . http_build_query($options, '', '&');
 
-        if ( ! empty((int)$width)) {
-            $path .= '&w=' . (int)$width;
+        if ( ! empty((int) $width)) {
+            $path .= '&w=' . (int) $width;
         }
 
-        if ( ! empty((int)$height)) {
-            $path .= '&h=' . (int)$height;
+        if ( ! empty((int) $height)) {
+            $path .= '&h=' . (int) $height;
         }
 
-        return '<img src="' . asset($path) . '" ' . http_build_query($attributes, '', ' ') . ' />';
+        return '<img src="' . asset($path) . '" ' . $this->buildAttributes($attributes) . ' />';
+    }
+
+    /**
+     * @param $attributes
+     *
+     * @return null|string
+     */
+    protected function buildAttributes($attributes)
+    {
+        if ( ! $attributes) {
+            return null;
+        }
+
+        $attributeMap = [];
+        foreach ($attributes as $attribute => $value) {
+            $attributeMap[] = $attribute . '="' . $value . '"';
+        }
+
+        return implode($attributeMap, ' ');
     }
 }
