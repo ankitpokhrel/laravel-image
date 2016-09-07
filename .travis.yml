@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - '5.6'
+  - '7.0'
+  - hhvm
+
+before_install:
+  - composer self-update
+  - composer create-project laravel/laravel
+  - cd ./laravel
+  - composer config repositories.ankitpokhrel vcs https://github.com/ankitpokhrel/laravel-image.git
+  - composer require ankitpokhrel/laravel-image dev-master
+  - composer update
+  - cp ./vendor/ankitpokhrel/laravel-image/tests/config/.env ./
+  - rm ./config/app.php
+  - cp ./vendor/ankitpokhrel/laravel-image/tests/config/app.php ./config
+  - php artisan vendor:publish
+  - cd ./vendor/ankitpokhrel/laravel-image
+  - composer install
+
+script: "phpunit"
