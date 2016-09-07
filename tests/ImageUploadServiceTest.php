@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageUploadServiceTest extends TestCase
 {
-    public static $functions;
-
     protected $uploadService;
 
     protected $validationRules = ['mimes:jpeg,jpg,png|max:2048'];
