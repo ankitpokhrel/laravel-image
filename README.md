@@ -11,12 +11,12 @@ Basic image upload and thumbnail management package for laravel 5+. This package
 
 ## Installation
 
-> For 5.1 use [5.1](https://github.com/ankitpokhrel/laravel-image/tree/5.1) branch.
+> For 5.3 use [master](https://github.com/ankitpokhrel/laravel-image) branch.
 
 Pull the package via composer
 
 ```php
-composer require "ankitpokhrel/laravel-image":"dev-master"
+composer require "ankitpokhrel/laravel-image":"5.1.x-dev"
 ```
 
 Include the service provider within `config/app.php`.

@@ -10,7 +10,7 @@ before_install:
   - composer create-project laravel/laravel
   - cd ./laravel
   - composer config repositories.ankitpokhrel vcs https://github.com/ankitpokhrel/laravel-image.git
-  - composer require ankitpokhrel/laravel-image dev-master
+  - composer require ankitpokhrel/laravel-image 5.1.x-dev
   - composer update
   - cp ./vendor/ankitpokhrel/laravel-image/tests/config/.env ./
   - rm ./config/app.php
