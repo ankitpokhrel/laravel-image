@@ -310,8 +310,7 @@ class ImageUploadServiceTest extends TestCase
 
         $uploadServiceMock
             ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
-            ->shouldReceive('getUploadPath')->andReturn($uploadDir)
-            ->shouldReceive('setUploadFolder')->withAnyArgs()->andReturn($uploadDir);
+            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
 
         $expected = [
             "original_image_name" => 'ankit.png',

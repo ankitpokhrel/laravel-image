@@ -15,8 +15,8 @@ class ImageHelper
     ];
 
     /**
-     * @param $dir Directory to search
-     * @param $image Image name
+     * @param $dir string Directory to search
+     * @param string $image Image name
      * @param null $width
      * @param null $height
      * @param array $options
