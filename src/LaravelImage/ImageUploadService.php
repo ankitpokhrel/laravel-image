@@ -279,11 +279,17 @@ class ImageUploadService
      *
      * @param string $folder Absolute path to the folder
      * @param bool $removeDirectory If you want to remove the folder as well
+     *
+     * @throws \Exception
      */
     public function clean($folder, $removeDirectory = false)
     {
+        if ( ! is_dir($folder)) {
+            throw new \Exception(('Not a folder.'));
+        }
+
         array_map('unlink', glob($folder . DIRECTORY_SEPARATOR . '*'));
-        if ($removeDirectory && file_exists($folder) && is_dir($folder)) {
+        if ($removeDirectory && file_exists($folder)) {
             rmdir($folder);
         }
     }
