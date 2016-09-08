@@ -278,7 +278,7 @@ class ImageUploadServiceTest extends TestCase
      * @covers ImageUploadService::getUniqueFilename
      * @covers ImageUploadService::getUploadedFileInfo
      */
-    public function image_is_uploaded_if_right_params_are_provided()
+    public function it_uploads_the_image()
     {
         $file = new UploadedFile(
             $this->testImage,
@@ -289,9 +289,6 @@ class ImageUploadServiceTest extends TestCase
             true
         );
 
-        $imageName = '57cbcd31b0fde.png';
-        $uploadDir = 'uploads/contents/639bd5bc-3dec-4bbf-af19-201931d1d0c2/';
-
         //mock input
         $input = m::mock(Request::class);
         $input->shouldReceive('setUserResolver')
@@ -300,27 +297,57 @@ class ImageUploadServiceTest extends TestCase
 
         Input::swap($input);
 
-        //mock upload service with required methods
         $uploadServiceMock = m::mock(
-            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct,getUniqueFilename,getUploadPath]',
+            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]',
             $this->validationRules
         );
 
-        $uploadServiceMock
-            ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
-            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
-
-        $expected = [
-            "original_image_name" => 'ankit.png',
-            "image"               => $imageName,
-            "upload_dir"          => $uploadDir,
-            "size"                => filesize($this->testImage),
-            "extension"           => 'png',
-            "mime_type"           => 'image/png',
-        ];
-
         $this->assertTrue($uploadServiceMock->upload());
-        $this->assertEquals($expected, $uploadServiceMock->getUploadedFileInfo());
+
+        $uploadedFileInfo = $uploadServiceMock->getUploadedFileInfo();
+
+        foreach (['original_image_name', 'image', 'upload_dir', 'size', 'extension', 'mime_type'] as $key) {
+            $this->assertArrayHasKey($key, $uploadedFileInfo);
+        }
+
+        return $uploadedFileInfo;
+    }
+
+    /**
+     * @test
+     *
+     * @covers ImageUploadService::clean
+     * @depends it_uploads_the_image
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage Not a folder.
+     */
+    public function it_throws_error_if_folder_is_file(array $uploadedFileInfo)
+    {
+        $dir  = public_path($uploadedFileInfo['upload_dir']);
+        $file = $dir . $uploadedFileInfo['image'];
+
+        $this->uploadService->clean($file);
+    }
+
+    /**
+     * @test
+     *
+     * @covers  ImageUploadService::clean
+     * @depends it_uploads_the_image
+     */
+    public function it_cleans_uploaded_file(array $uploadedFileInfo)
+    {
+        $dir  = public_path($uploadedFileInfo['upload_dir']);
+        $file = $dir . $uploadedFileInfo['image'];
+
+        $this->assertTrue(file_exists($file));
+
+        $this->uploadService->clean($dir);
+        $this->assertFalse(file_exists($file));
+
+        $this->uploadService->clean($dir, true);
+        $this->assertFalse(file_exists($dir));
     }
 
     public function tearDown()
