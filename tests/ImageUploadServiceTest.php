@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Input;
 use \Mockery as m;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @coversDefaultClass AnkitPokhrel\LaravelImage\ImageUploadService
+ */
 class ImageUploadServiceTest extends TestCase
 {
     protected $uploadService;
@@ -27,8 +30,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadField
-     * @covers ImageUploadService::getUploadField
+     * @covers ::setUploadField
+     * @covers ::getUploadField
      */
     public function set_upload_field()
     {
@@ -43,8 +46,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadDir
-     * @covers ImageUploadService::getUploadDir
+     * @covers ::setUploadDir
+     * @covers ::getUploadDir
      */
     public function set_upload_dir()
     {
@@ -59,8 +62,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setValidationRules
-     * @covers ImageUploadService::getValidationRules
+     * @covers ::setValidationRules
+     * @covers ::getValidationRules
      */
     public function set_validation_rules()
     {
@@ -75,8 +78,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setBasePath
-     * @covers ImageUploadService::getBasePath
+     * @covers ::setBasePath
+     * @covers ::getBasePath
      */
     public function set_base_path()
     {
@@ -91,8 +94,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setPublicPath
-     * @covers ImageUploadService::getPublicPath
+     * @covers ::setPublicPath
+     * @covers ::getPublicPath
      */
     public function set_public_path()
     {
@@ -107,8 +110,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadFolder
-     * @covers ImageUploadService::getUploadPath
+     * @covers ::setUploadFolder
+     * @covers ::getUploadPath
      */
     public function set_upload_folder()
     {
@@ -124,8 +127,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setOriginalImageNameField
-     * @covers ImageUploadService::getOriginalImageNameField
+     * @covers ::setOriginalImageNameField
+     * @covers ::getOriginalImageNameField
      */
     public function set_original_image_name_field()
     {
@@ -140,7 +143,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::getUniqueFolderName()
+     * @covers ::getUniqueFolderName()
      */
     public function get_unique_folder_name()
     {
@@ -154,7 +157,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers       ImageUploadService::getUniqueFilename
+     * @covers       ::getUniqueFilename
      * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::fileNames
      */
     public function get_unique_file_name_has_valid_extension($fileName, $ext)
@@ -171,7 +174,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::getUniqueFilename
+     * @covers ::getUniqueFilename
      */
     public function get_unique_file_name_generates_unique_file_names()
     {
@@ -185,7 +188,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::validate
+     * @covers ::validate
      */
     public function validate_file_with_right_params()
     {
@@ -204,7 +207,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers       ImageUploadService::validate
+     * @covers       ::validate
      * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::invalidFileOptions
      */
     public function validate_fails_for_invalid_params($size, $type)
@@ -224,10 +227,10 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::upload
-     * @covers ImageUploadService::getUploadPath
-     * @covers ImageUploadService::getUniqueFilename
-     * @covers ImageUploadService::getValidationErrors
+     * @covers ::upload
+     * @covers ::getUploadPath
+     * @covers ::getUniqueFilename
+     * @covers ::getValidationErrors
      */
     public function upload_return_errors_for_invalid_params()
     {
@@ -273,10 +276,10 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::upload
-     * @covers ImageUploadService::getUploadPath
-     * @covers ImageUploadService::getUniqueFilename
-     * @covers ImageUploadService::getUploadedFileInfo
+     * @covers ::upload
+     * @covers ::getUploadPath
+     * @covers ::getUniqueFilename
+     * @covers ::getUploadedFileInfo
      */
     public function it_uploads_the_image()
     {
@@ -316,7 +319,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::clean
+     * @covers ::clean
      * @depends it_uploads_the_image
      *
      * @expectedException \Exception
@@ -333,7 +336,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers  ImageUploadService::clean
+     * @covers  ::clean
      * @depends it_uploads_the_image
      */
     public function it_cleans_uploaded_file(array $uploadedFileInfo)
