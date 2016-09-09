@@ -22,5 +22,5 @@ before_install:
 script: phpunit --coverage-clover=coverage.clover
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - if ([ "hhvm" != "$TRAVIS_PHP_VERSION" ]); then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;
+  - if ([ "hhvm" != "$TRAVIS_PHP_VERSION" ] && [ "7.0" != "$TRAVIS_PHP_VERSION" ]); then wget https://scrutinizer-ci.com/ocular.phar; fi;
+  - if ([ "hhvm" != "$TRAVIS_PHP_VERSION" ] && [ "7.0" != "$TRAVIS_PHP_VERSION" ]); then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;
