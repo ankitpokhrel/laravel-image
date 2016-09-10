@@ -5,6 +5,9 @@ namespace AnkitPokhrel\LaravelImage\Tests;
 use AnkitPokhrel\LaravelImage\ImageHelper;
 use \Mockery as m;
 
+/**
+ * @coversDefaultClass AnkitPokhrel\LaravelImage\ImageHelper
+ */
 class ImageHelperTest extends TestCase
 {
     protected $helper;
@@ -19,7 +22,7 @@ class ImageHelperTest extends TestCase
     /**
      * @test
      *
-     * @covers       ImageHelper::image
+     * @covers       ::image
      * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::imageOptions
      */
     public function it_generates_valid_image_tag($uploadDir, $image, $width, $height, $options, $attributes, $output)

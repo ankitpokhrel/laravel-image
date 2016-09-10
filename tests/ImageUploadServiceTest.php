@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Input;
 use \Mockery as m;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @coversDefaultClass AnkitPokhrel\LaravelImage\ImageUploadService
+ */
 class ImageUploadServiceTest extends TestCase
 {
     protected $uploadService;
@@ -27,8 +30,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadField
-     * @covers ImageUploadService::getUploadField
+     * @covers ::setUploadField
+     * @covers ::getUploadField
      */
     public function set_upload_field()
     {
@@ -43,8 +46,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadDir
-     * @covers ImageUploadService::getUploadDir
+     * @covers ::setUploadDir
+     * @covers ::getUploadDir
      */
     public function set_upload_dir()
     {
@@ -59,8 +62,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setValidationRules
-     * @covers ImageUploadService::getValidationRules
+     * @covers ::setValidationRules
+     * @covers ::getValidationRules
      */
     public function set_validation_rules()
     {
@@ -75,8 +78,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setBasePath
-     * @covers ImageUploadService::getBasePath
+     * @covers ::setBasePath
+     * @covers ::getBasePath
      */
     public function set_base_path()
     {
@@ -91,8 +94,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setPublicPath
-     * @covers ImageUploadService::getPublicPath
+     * @covers ::getPublicPath
+     * @covers ::setBasePath
      */
     public function set_public_path()
     {
@@ -107,8 +110,9 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::setUploadFolder
-     * @covers ImageUploadService::getUploadPath
+     * @covers ::setUploadFolder
+     * @covers ::getUploadPath
+     * @covers ::getDestination
      */
     public function set_upload_folder()
     {
@@ -119,13 +123,20 @@ class ImageUploadServiceTest extends TestCase
 
         $regex = '/^uploads\/users\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
         $this->assertRegexp($regex, $this->uploadService->getUploadPath());
+
+        //test destination
+        $this->uploadService->setBasePath('/app/', false);
+        $this->uploadService->setUploadFolder('users');
+
+        $regex = '/^\/app\/users\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
+        $this->assertRegexp($regex, $this->uploadService->getDestination());
     }
 
     /**
      * @test
      *
-     * @covers ImageUploadService::setOriginalImageNameField
-     * @covers ImageUploadService::getOriginalImageNameField
+     * @covers ::setOriginalImageNameField
+     * @covers ::getOriginalImageNameField
      */
     public function set_original_image_name_field()
     {
@@ -140,7 +151,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::getUniqueFolderName()
+     * @covers ::getUniqueFolderName()
      */
     public function get_unique_folder_name()
     {
@@ -154,7 +165,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers       ImageUploadService::getUniqueFilename
+     * @covers       ::getUniqueFilename
      * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::fileNames
      */
     public function get_unique_file_name_has_valid_extension($fileName, $ext)
@@ -171,7 +182,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::getUniqueFilename
+     * @covers ::getUniqueFilename
      */
     public function get_unique_file_name_generates_unique_file_names()
     {
@@ -185,7 +196,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::validate
+     * @covers ::validate
      */
     public function validate_file_with_right_params()
     {
@@ -204,7 +215,7 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers       ImageUploadService::validate
+     * @covers       ::validate
      * @dataProvider AnkitPokhrel\LaravelImage\Tests\DataProvider::invalidFileOptions
      */
     public function validate_fails_for_invalid_params($size, $type)
@@ -224,10 +235,10 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::upload
-     * @covers ImageUploadService::getUploadPath
-     * @covers ImageUploadService::getUniqueFilename
-     * @covers ImageUploadService::getValidationErrors
+     * @covers ::upload
+     * @covers ::getUploadPath
+     * @covers ::getUniqueFilename
+     * @covers ::getValidationErrors
      */
     public function upload_return_errors_for_invalid_params()
     {
@@ -273,12 +284,12 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ImageUploadService::upload
-     * @covers ImageUploadService::getUploadPath
-     * @covers ImageUploadService::getUniqueFilename
-     * @covers ImageUploadService::getUploadedFileInfo
+     * @covers ::upload
+     * @covers ::getUploadPath
+     * @covers ::getUniqueFilename
+     * @covers ::getUploadedFileInfo
      */
-    public function image_is_uploaded_if_right_params_are_provided()
+    public function it_uploads_the_image()
     {
         $file = new UploadedFile(
             $this->testImage,
@@ -289,9 +300,6 @@ class ImageUploadServiceTest extends TestCase
             true
         );
 
-        $imageName = '57cbcd31b0fde.png';
-        $uploadDir = 'uploads/contents/639bd5bc-3dec-4bbf-af19-201931d1d0c2/';
-
         //mock input
         $input = m::mock(Request::class);
         $input->shouldReceive('setUserResolver')
@@ -300,27 +308,57 @@ class ImageUploadServiceTest extends TestCase
 
         Input::swap($input);
 
-        //mock upload service with required methods
         $uploadServiceMock = m::mock(
-            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct,getUniqueFilename,getUploadPath]',
+            '\AnkitPokhrel\LaravelImage\ImageUploadService[_construct]',
             $this->validationRules
         );
 
-        $uploadServiceMock
-            ->shouldReceive('getUniqueFilename')->withAnyArgs()->andReturn($imageName)
-            ->shouldReceive('getUploadPath')->andReturn($uploadDir);
-
-        $expected = [
-            "original_image_name" => 'ankit.png',
-            "image"               => $imageName,
-            "upload_dir"          => $uploadDir,
-            "size"                => filesize($this->testImage),
-            "extension"           => 'png',
-            "mime_type"           => 'image/png',
-        ];
-
         $this->assertTrue($uploadServiceMock->upload());
-        $this->assertEquals($expected, $uploadServiceMock->getUploadedFileInfo());
+
+        $uploadedFileInfo = $uploadServiceMock->getUploadedFileInfo();
+
+        foreach (['original_image_name', 'image', 'upload_dir', 'size', 'extension', 'mime_type'] as $key) {
+            $this->assertArrayHasKey($key, $uploadedFileInfo);
+        }
+
+        return $uploadedFileInfo;
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::clean
+     * @depends it_uploads_the_image
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage Not a folder.
+     */
+    public function it_throws_error_if_folder_is_file(array $uploadedFileInfo)
+    {
+        $dir  = public_path($uploadedFileInfo['upload_dir']);
+        $file = $dir . $uploadedFileInfo['image'];
+
+        $this->uploadService->clean($file);
+    }
+
+    /**
+     * @test
+     *
+     * @covers  ::clean
+     * @depends it_uploads_the_image
+     */
+    public function it_cleans_uploaded_file(array $uploadedFileInfo)
+    {
+        $dir  = public_path($uploadedFileInfo['upload_dir']);
+        $file = $dir . $uploadedFileInfo['image'];
+
+        $this->assertTrue(file_exists($file));
+
+        $this->uploadService->clean($dir);
+        $this->assertFalse(file_exists($file));
+
+        $this->uploadService->clean($dir, true);
+        $this->assertFalse(file_exists($dir));
     }
 
     public function tearDown()

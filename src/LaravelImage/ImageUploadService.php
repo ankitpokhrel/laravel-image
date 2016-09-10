@@ -180,6 +180,16 @@ class ImageUploadService
     }
 
     /**
+     * Get upload destination.
+     *
+     * @return string
+     */
+    public function getDestination()
+    {
+        return $this->destination;
+    }
+
+    /**
      * Get upload path
      *
      * @return string
@@ -250,7 +260,7 @@ class ImageUploadService
         $mimeType          = $file->getMimeType();
 
         $size = $file->getSize();
-        if ($file->move($this->destination, $encryptedFileName)) {
+        if ($file->move($this->getDestination(), $encryptedFileName)) {
             $this->uploadedFileInfo = [
                 $this->originalImageNameField => $originalFileName,
                 $this->field                  => $encryptedFileName,
@@ -273,17 +283,23 @@ class ImageUploadService
     {
         return $this->errors;
     }
-
+    
     /**
      * Clear out a folder and its content.
      *
      * @param string $folder Absolute path to the folder
      * @param bool $removeDirectory If you want to remove the folder as well
+     *
+     * @throws \Exception
      */
     public function clean($folder, $removeDirectory = false)
     {
+        if ( ! is_dir($folder)) {
+            throw new \Exception(('Not a folder.'));
+        }
+
         array_map('unlink', glob($folder . DIRECTORY_SEPARATOR . '*'));
-        if ($removeDirectory && file_exists($folder) && is_dir($folder)) {
+        if ($removeDirectory && file_exists($folder)) {
             rmdir($folder);
         }
     }

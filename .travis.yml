@@ -19,4 +19,9 @@ before_install:
   - cd ./vendor/ankitpokhrel/laravel-image
   - composer install
 
-script: "phpunit"
+script: phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - if ([ "hhvm" != "$TRAVIS_PHP_VERSION" ] && [ "7.0" != "$TRAVIS_PHP_VERSION" ]); then wget https://scrutinizer-ci.com/ocular.phar; fi;
+  - if ([ "hhvm" != "$TRAVIS_PHP_VERSION" ] && [ "7.0" != "$TRAVIS_PHP_VERSION" ]); then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;
+
