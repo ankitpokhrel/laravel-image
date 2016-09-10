@@ -34,7 +34,7 @@ class ImageUploadServiceProvider extends ServiceProvider
     {
         $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService');
 
-        $this->app->singleton('laravelImage', function () {
+        $this->app->singleton('laravelImage', function() {
             return $this->app->make('\AnkitPokhrel\LaravelImage\ImageHelper');
         });
 
@@ -46,7 +46,7 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     protected function registerGlide()
     {
-        $this->app->singleton('\League\Glide\Server', function ($app) {
+        $this->app->singleton('\League\Glide\Server', function($app) {
 
             $fileSystem = $app->make(Filesystem::class);
 
@@ -78,7 +78,7 @@ class ImageUploadServiceProvider extends ServiceProvider
     {
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->directive('laravelImage', function ($options) {
+        $blade->directive('laravelImage', function($options) {
             return "<?php echo \\AnkitPokhrel\\LaravelImage\\LaravelImageFacade::picture(array $options);?>";
         });
     }

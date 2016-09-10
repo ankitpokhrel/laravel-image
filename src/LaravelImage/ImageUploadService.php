@@ -24,7 +24,7 @@ class ImageUploadService
     /** @var string Upload base path */
     protected $basePath = 'uploads/';
 
-    /** @var bool Relative path to upload dir */
+    /** @var string Relative path to upload dir */
     protected $uploadPath = '';
 
     /** @var bool Is file uploaded in public dir? */
