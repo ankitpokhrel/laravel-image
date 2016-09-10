@@ -94,8 +94,8 @@ class ImageUploadServiceTest extends TestCase
     /**
      * @test
      *
-     * @covers ::setPublicPath
      * @covers ::getPublicPath
+     * @covers ::setBasePath
      */
     public function set_public_path()
     {
@@ -112,6 +112,7 @@ class ImageUploadServiceTest extends TestCase
      *
      * @covers ::setUploadFolder
      * @covers ::getUploadPath
+     * @covers ::getDestination
      */
     public function set_upload_folder()
     {
@@ -122,6 +123,13 @@ class ImageUploadServiceTest extends TestCase
 
         $regex = '/^uploads\/users\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
         $this->assertRegexp($regex, $this->uploadService->getUploadPath());
+
+        //test destination
+        $this->uploadService->setBasePath('/app/', false);
+        $this->uploadService->setUploadFolder('users');
+
+        $regex = '/^\/app\/users\/([a-z0-9]){8}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){4}-([a-z0-9]){12}\/$/i';
+        $this->assertRegexp($regex, $this->uploadService->getDestination());
     }
 
     /**

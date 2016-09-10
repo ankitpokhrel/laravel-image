@@ -44,6 +44,8 @@ class ImageHelper
     /**
      * @param $attributes
      *
+     * @codeCoverageIgnore
+     *
      * @return null|string
      */
     protected function buildAttributes($attributes)

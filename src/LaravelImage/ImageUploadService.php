@@ -149,16 +149,6 @@ class ImageUploadService
     }
 
     /**
-     * Enable or disable public path.
-     *
-     * @param $bool
-     */
-    public function setPublicPath($bool)
-    {
-        $this->publicPath = $bool;
-    }
-
-    /**
      * Get public path.
      */
     public function getPublicPath()
@@ -167,16 +157,24 @@ class ImageUploadService
     }
 
     /**
+     * Set upload folder.
+     *
      * @param $folder
      */
     public function setUploadFolder($folder)
     {
         $this->uploadPath = $this->basePath . $folder . '/' . $this->getUniqueFolderName() . '/';
-        if ($this->publicPath) {
-            $this->destination = public_path($this->uploadPath);
-        } else {
-            $this->destination = $this->uploadPath;
-        }
+        $this->destination = $this->publicPath ? public_path($this->uploadPath) : $this->uploadPath;
+    }
+
+    /**
+     * Get upload destination.
+     *
+     * @return string
+     */
+    public function getDestination()
+    {
+        return $this->destination;
     }
 
     /**
@@ -250,7 +248,7 @@ class ImageUploadService
         $mimeType          = $file->getMimeType();
 
         $size = $file->getSize();
-        if ($file->move($this->destination, $encryptedFileName)) {
+        if ($file->move($this->getDestination(), $encryptedFileName)) {
             $this->uploadedFileInfo = [
                 $this->originalImageNameField => $originalFileName,
                 $this->field                  => $encryptedFileName,
