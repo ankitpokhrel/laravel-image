@@ -283,7 +283,7 @@ class ImageUploadService
     {
         return $this->errors;
     }
-    
+
     /**
      * Clear out a folder and its content.
      *
