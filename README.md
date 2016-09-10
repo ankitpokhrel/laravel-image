@@ -2,6 +2,7 @@
 [![Latest Version](https://img.shields.io/github/release/ankitpokhrel/laravel-image.svg?style=flat-square)](https://github.com/ankitpokhrel/laravel-image/releases)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ankitpokhrel/laravel-image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/laravel-image/?branch=master)
 [![Travis Build](https://img.shields.io/travis/ankitpokhrel/laravel-image.svg?style=flat-square)](https://travis-ci.org/ankitpokhrel/laravel-image)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/laravel-image.svg?style=flat-square)](https://scrutinizer-ci.com/g/ankitpokhrel/laravel-image/?branch=master)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/ankitpokhrel/laravel-image.svg?style=flat-square)](https://packagist.org/packages/ankitpokhrel/laravel-image)
 
@@ -77,6 +78,12 @@ public function store(ContentRequest $request)
         ...
         //do whatever you like with the information
         $input = array_merge($input, $uploadedFileInfo);
+    } else {
+        //get validator object
+        $validator = $this->image->getValidationErrors();
+        
+        //get error messages
+        $errors = $validator->messages()->all();
     }
 
     ...
@@ -101,6 +108,34 @@ public function update(Request $request, $id)
     ...
 }
 ```
+
+#### Customizing upload path
+
+Sometime you may want to group uploaded image or even store image somewhere else other than the public folder. 
+You can do it by setting base path. For example, this settings below will store images inside 
+`public/uploads/user-images/users/` directory.
+
+```php
+//set base path
+$this->file->setBasePath('uploads/user-images/');
+
+//set upload folder
+$this->file->setUploadFolder('users');
+```
+
+If you want to upload image in other places other than `public` folder, you can provide second parameter as `false` 
+to the base path method.
+
+```php
+//set absolute base path
+$this->file->setBasePath('/absolute/path/to/your/folder/uploads/', true);
+
+//set upload folder
+$this->file->setUploadFolder('users');
+```
+
+This will upload image to `/absolute/path/to/your/folder/uploads/users` folder. Make sure that the folder has proper 
+permission to store the images.
 
 #### Using blade directive to display images
 
