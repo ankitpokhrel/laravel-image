@@ -1,7 +1,6 @@
 {
   "name": "ankitpokhrel/laravel-image",
   "description": "Easy image upload and thumbnail management",
-  "version": "dev-master",
   "license": "MIT",
   "authors": [
     {
@@ -29,6 +28,5 @@
     "psr-4": {
       "AnkitPokhrel\\LaravelImage\\Tests\\": "tests"
     }
-  },
-  "minimum-stability": "stable"
+  }
 }
