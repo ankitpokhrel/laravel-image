@@ -17,7 +17,7 @@ Basic image upload and thumbnail management package for laravel 5+. This package
 Pull the package via composer
 
 ```php
-composer require "ankitpokhrel/laravel-image":"dev-master"
+composer require ankitpokhrel/laravel-image
 ```
 
 Include the service provider within `config/app.php`.
