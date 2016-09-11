@@ -8,10 +8,10 @@
 
 Basic image upload and thumbnail management package for laravel 5+. This package uses [Glide](http://glide.thephpleague.com/) library from the php league for on-demand image manipulation.
 
-> THIS PACKAGE IS NOT YET PRODUCTION READY
-
 ## Installation
 
+> For 5.1 use [5.1](https://github.com/ankitpokhrel/laravel-image/tree/5.1) branch.  
+> For 5.2 use [5.2](https://github.com/ankitpokhrel/laravel-image/tree/5.2) branch.  
 > For 5.3 use [master](https://github.com/ankitpokhrel/laravel-image) branch.
 
 Pull the package via composer
