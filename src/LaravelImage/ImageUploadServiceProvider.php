@@ -2,12 +2,12 @@
 
 namespace AnkitPokhrel\LaravelImage;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem as LeagueFilesystem;
-use League\Glide\ServerFactory;
 use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\ServerFactory;
 
 class ImageUploadServiceProvider extends ServiceProvider
 {
@@ -34,7 +34,7 @@ class ImageUploadServiceProvider extends ServiceProvider
     {
         $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService');
 
-        $this->app->singleton('laravelImage', function() {
+        $this->app->singleton('laravelImage', function () {
             return $this->app->make('\AnkitPokhrel\LaravelImage\ImageHelper');
         });
 
@@ -42,12 +42,11 @@ class ImageUploadServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register glide
+     * Register glide.
      */
     protected function registerGlide()
     {
-        $this->app->singleton('\League\Glide\Server', function($app) {
-
+        $this->app->singleton('\League\Glide\Server', function ($app) {
             $fileSystem = $app->make(Filesystem::class);
 
             $uploadDir = config('laravelimage.uploadDir');
@@ -72,13 +71,13 @@ class ImageUploadServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register blade templates
+     * Register blade templates.
      */
     protected function registerBladeExtensions()
     {
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->directive('laravelImage', function($options) {
+        $blade->directive('laravelImage', function ($options) {
             return "<?php echo \\AnkitPokhrel\\LaravelImage\\LaravelImageFacade::picture(array $options);?>";
         });
     }
