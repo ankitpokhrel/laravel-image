@@ -16,10 +16,10 @@ class ImageHelper
 
     /**
      * @param $dir string Directory to search
-     * @param string $image Image name
-     * @param null $width
-     * @param null $height
-     * @param array $options
+     * @param string $image   Image name
+     * @param null   $width
+     * @param null   $height
+     * @param array  $options
      *
      * @return string
      */
@@ -51,7 +51,7 @@ class ImageHelper
     protected function buildAttributes($attributes)
     {
         if ( ! $attributes) {
-            return null;
+            return;
         }
 
         $attributeMap = [];
