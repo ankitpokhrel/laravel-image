@@ -3,7 +3,6 @@
 namespace AnkitPokhrel\LaravelImage\Tests;
 
 use AnkitPokhrel\LaravelImage\ImageHelper;
-use \Mockery as m;
 
 /**
  * @coversDefaultClass AnkitPokhrel\LaravelImage\ImageHelper
@@ -16,7 +15,7 @@ class ImageHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->helper = new ImageHelper;
+        $this->helper = new ImageHelper();
     }
 
     /**
