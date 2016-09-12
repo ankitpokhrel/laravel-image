@@ -17,8 +17,8 @@ class ImageHelper
     /**
      * @param $dir Directory to search
      * @param $image Image name
-     * @param null $width
-     * @param null $height
+     * @param null  $width
+     * @param null  $height
      * @param array $options
      *
      * @return string
@@ -49,7 +49,7 @@ class ImageHelper
     protected function buildAttributes($attributes)
     {
         if ( ! $attributes) {
-            return null;
+            return;
         }
 
         $attributeMap = [];
@@ -74,7 +74,7 @@ class ImageHelper
         }
 
         return $this->image($options[0], $options[1], (isset($options[2]) ? $options[2] : null),
-            (isset($options[3]) ? $options[3] : null), (! empty($options[4]) ? $options[4] : []),
-            (! empty($options[5]) ? $options[5] : []));
+            (isset($options[3]) ? $options[3] : null), ( ! empty($options[4]) ? $options[4] : []),
+            ( ! empty($options[5]) ? $options[5] : []));
     }
 }

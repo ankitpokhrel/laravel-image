@@ -2,10 +2,9 @@
 
 namespace AnkitPokhrel\LaravelImage\Tests;
 
-use AnkitPokhrel\LaravelImage\ImageUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use \Mockery as m;
+use Mockery as m;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
