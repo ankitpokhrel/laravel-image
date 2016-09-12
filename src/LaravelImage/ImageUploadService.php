@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Handles all image upload operation
+ * Handles all image upload operation.
  *
  * @author Ankit Pokhrel
  */
@@ -163,7 +163,7 @@ class ImageUploadService
      */
     public function setUploadFolder($folder)
     {
-        $this->uploadPath = $this->basePath . $folder . '/' . $this->getUniqueFolderName() . '/';
+        $this->uploadPath  = $this->basePath . $folder . '/' . $this->getUniqueFolderName() . '/';
         $this->destination = $this->publicPath ? public_path($this->uploadPath) : $this->uploadPath;
     }
 
@@ -178,7 +178,7 @@ class ImageUploadService
     }
 
     /**
-     * Get upload path
+     * Get upload path.
      *
      * @return string
      */
@@ -275,8 +275,8 @@ class ImageUploadService
     /**
      * Clear out a folder and its content.
      *
-     * @param string $folder Absolute path to the folder
-     * @param bool $removeDirectory If you want to remove the folder as well
+     * @param string $folder          Absolute path to the folder
+     * @param bool   $removeDirectory If you want to remove the folder as well
      *
      * @throws \Exception
      */
