@@ -71,7 +71,7 @@ public function store(ContentRequest $request)
 {
     $input = $request->all();
 
-    if (Input::hasFile('image') && $this->image->upload()) {
+    if (Input::hasFile($this->image->getUploadField()) && $this->image->upload()) {
         //image is uploaded, get uploaded image info
         $uploadedFileInfo = $this->image->getUploadedFileInfo();
 
@@ -96,11 +96,11 @@ public function update(Request $request, $id)
 {
     ...
 
-    if (Input::hasFile('image') && $this->image->upload()) {
+    if (Input::hasFile($this->image->getUploadField()) && $this->image->upload()) {
         ...
 
         //remove old files
-        if ( ! empty($model->file_path)) {
+        if (!empty(trim($model->file_path))) {
             $this->image->clean(public_path($model->file_path), true);
         }
     }
@@ -108,6 +108,21 @@ public function update(Request $request, $id)
     ...
 }
 ```
+
+#### Uploaded file info
+You can get uploaded file info using `$this->image->getUploadedFileInfo()`. It will return array as follow:
+```php
+image               : Saved image name,
+upload_dir          : Image upload path
+original_image_name : Real name of uploaded image
+size                : Size of the uploaded image
+extension           : Extension of the uploaded image
+mime_type           : Mime type of the uploaded image
+```
+
+To change `image` field you can use `setUploadField()` method. If you wish to change `upload_dir` field you can use `setUploadDir` method. Usually you will save `image`, `upload_dir` and `original_image_name` to the database.
+
+To get validation errors, you can use `getValidationErrors()` method.
 
 #### Customizing upload path
 
@@ -172,3 +187,5 @@ Options & attributes
 ```html
 <img src="/cache/{{ $uploadDir . $image  }}?w=128&fit=crop-center" alt="" />
 ```
+
+Generated images are cached inside `storage/laravel-image-cache`.
