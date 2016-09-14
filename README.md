@@ -113,7 +113,7 @@ public function update(Request $request, $id)
 #### Uploaded file info
 You can get uploaded file info using `$this->image->getUploadedFileInfo()`. It will return array as follow:
 ```php
-image               : Saved image name,
+image               : Saved image name
 upload_dir          : Image upload path
 original_image_name : Real name of uploaded image
 size                : Size of the uploaded image
