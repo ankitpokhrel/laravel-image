@@ -133,10 +133,10 @@ You can do it by setting base path. For example, this settings below will store 
 
 ```php
 //set base path
-$this->file->setBasePath('uploads/user-images/');
+$this->image->setBasePath('uploads/user-images/');
 
 //set upload folder
-$this->file->setUploadFolder('users');
+$this->image->setUploadFolder('users');
 ```
 
 If you want to upload image in other places other than `public` folder, you can provide second parameter as `false` 
@@ -144,10 +144,10 @@ to the base path method.
 
 ```php
 //set absolute base path
-$this->file->setBasePath('/absolute/path/to/your/folder/uploads/', true);
+$this->image->setBasePath('/absolute/path/to/your/folder/uploads/', true);
 
 //set upload folder
-$this->file->setUploadFolder('users');
+$this->image->setUploadFolder('users');
 ```
 
 This will upload image to `/absolute/path/to/your/folder/uploads/users` folder. Make sure that the folder has proper 
