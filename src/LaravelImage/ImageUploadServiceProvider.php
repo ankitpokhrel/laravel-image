@@ -21,7 +21,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../config/config.php' => config_path('laravelimage.php'),
+            __DIR__ . '/../config/config.php' => config_path('laravel-image.php'),
         ]);
 
         $this->registerBladeExtensions();
@@ -32,7 +32,13 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService');
+        $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService', function ($app) {
+            $driver = '\\AnkitPokhrel\\LaravelImage\\Adapter\\' . ucfirst(config('laravel-image.default'));
+
+            $adapter = $app->make($driver);
+
+            return new ImageUploadService($adapter);
+        });
 
         $this->app->singleton('laravelImage', function () {
             return $this->app->make('\AnkitPokhrel\LaravelImage\ImageHelper');
@@ -49,7 +55,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         $this->app->singleton('\League\Glide\Server', function ($app) {
             $fileSystem = $app->make(Filesystem::class);
 
-            $uploadDir = config('laravelimage.uploadDir');
+            $uploadDir = config('laravel-image.upload_dir');
             // Set source filesystem
             $source = new LeagueFilesystem(
                 new Local($uploadDir)
@@ -57,14 +63,14 @@ class ImageUploadServiceProvider extends ServiceProvider
 
             // Set cache filesystem
             $cache = new LeagueFilesystem(
-                new Local($fileSystem->getDriver()->getAdapter()->getPathPrefix() . '/laravel-image-cache')
+                new Local($fileSystem->getDriver()->getAdapter()->getPathPrefix() . '/cache/laravel-image')
             );
 
             // Setup glide server
             return ServerFactory::create([
                 'source'   => $source,
                 'cache'    => $cache,
-                'base_url' => config('laravelimage.routePath') . '/' . basename($uploadDir),
+                'base_url' => config('laravel-image.route_path') . '/' . basename($uploadDir),
                 'response' => new LaravelResponseFactory(),
             ]);
         });
