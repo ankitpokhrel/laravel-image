@@ -60,6 +60,17 @@ class ImageUploadService
     /**
      * Set upload folder.
      *
+     * @param $path
+     * @param $absolute
+     */
+    public function setBasePath($path, $absolute = false)
+    {
+        $this->getAdapter()->setBasePath($path, $absolute);
+    }
+
+    /**
+     * Set upload folder.
+     *
      * @param $folder
      */
     public function setUploadFolder($folder)

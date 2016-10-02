@@ -20,7 +20,13 @@ abstract class AbstractAdapter implements AdapterInterface
     protected $originalImageNameField = 'original_image_name';
 
     /** @var string Relative path to upload dir */
-    protected $uploadFolder = 'uploads/';
+    protected $basePath = null;
+
+    /** @var bool Is file uploaded in absolute path? */
+    protected $absolutePath = false;
+
+    /** @var string Relative path to upload dir */
+    protected $uploadFolder = '';
 
     /** @var array Uploaded file info */
     protected $uploadedFileInfo = [];
@@ -55,6 +61,8 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Get uploaded file info.
      *
+     * @param $fileInfo
+     *
      * @return array
      */
     public function setUploadedFileInfo($fileInfo)
@@ -75,7 +83,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * get upload field.
      *
-     * return string
+     * @return string
      */
     public function getUploadField()
     {
@@ -95,7 +103,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * get upload directory.
      *
-     * return string
+     * @return string
      */
     public function getUploadDir()
     {
@@ -115,7 +123,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * get original image name field.
      *
-     * return string
+     * @return string
      */
     public function getOriginalImageNameField()
     {
@@ -123,6 +131,8 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * Set validation rules.
+     *
      * @param $rules
      */
     public function setValidationRules($rules)
@@ -132,6 +142,8 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Get validation rules.
+     *
+     * @return array
      */
     public function getValidationRules()
     {
@@ -149,13 +161,55 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * Set base path.
+     *
+     * @param string $path
+     * @param bool   $absolute
+     */
+    public function setBasePath($path, $absolute = false)
+    {
+        $this->basePath     = $path;
+        $this->absolutePath = $absolute;
+    }
+
+    /**
+     * Get absolute path.
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->absolutePath;
+    }
+
+    /**
+     * Get absolute path.
+     *
+     * @param $bool
+     */
+    public function setAbsolutePath($bool)
+    {
+        $this->absolutePath = $bool;
+    }
+
+    /**
+     * Set base path.
+     *
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+    /**
      * Set upload folder.
      *
      * @param $folder
      */
     public function setUploadFolder($folder)
     {
-        $this->uploadFolder  = $this->basePath . $folder . '/' . $this->getUniqueFolderName() . '/';
+        $this->uploadFolder = $this->getBasePath() . $folder . '/' . $this->getUniqueFolderName() . '/';
     }
 
     /**
@@ -182,11 +236,8 @@ abstract class AbstractAdapter implements AdapterInterface
             return false;
         }
 
-        $inputFile = [$this->field => $file];
-        $rules     = [$this->field => $this->validationRules];
-
         // Validate
-        $validator = Validator::make($inputFile, $rules);
+        $validator = Validator::make([$this->field => $file], [$this->field => $this->validationRules]);
         if ($validator->fails()) {
             $this->errors = $validator;
 
@@ -210,19 +261,19 @@ abstract class AbstractAdapter implements AdapterInterface
 
         $originalFileName  = $file->getClientOriginalName();
         $encryptedFileName = $this->getUniqueFilename($originalFileName);
+        $uploadFolder      = $this->getUploadFolder();
 
-        if ($this->getAdapter()->put(
-            $this->getUploadFolder() . $encryptedFileName,
-            file_get_contents($file->getRealPath()))
-        ) {
-            $this->setUploadedFileInfo([
-                $this->originalImageNameField => $originalFileName,
-                $this->field                  => $encryptedFileName,
-                $this->uploadDir              => $this->getUploadFolder(),
-                'size'                        => $file->getSize(),
-                'extension'                   => $file->getClientOriginalExtension(),
-                'mime_type'                   => $file->getMimeType(),
-            ]);
+        $uploadedFileInfo = [
+            $this->originalImageNameField => $originalFileName,
+            $this->field                  => $encryptedFileName,
+            $this->uploadDir              => $this->getAbsolutePath() ? $uploadFolder : public_path($uploadFolder),
+            'size'                        => $file->getSize(),
+            'extension'                   => $file->getClientOriginalExtension(),
+            'mime_type'                   => $file->getMimeType(),
+        ];
+
+        if ($this->write($this->getUploadFolder() . $encryptedFileName, $file)) {
+            $this->setUploadedFileInfo($uploadedFileInfo);
 
             return true;
         }
@@ -231,9 +282,24 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * Write the contents of a file.
+     *
+     * @param  string $path
+     * @param  object $file
+     * @param  string $visibility
+     *
+     * @return bool
+     */
+    public function write($path, $file, $visibility = null)
+    {
+        return $this->getAdapter()->put($path, file_get_contents($file->getRealPath()), $visibility);
+    }
+
+    /**
      * Delete the file at a given path.
      *
-     * @param  string|array  $paths
+     * @param  string|array $paths
+     *
      * @return bool
      */
     public function remove($paths)
@@ -246,8 +312,9 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * The directory itself may be optionally preserved.
      *
-     * @param  string  $directory
-     * @param  bool    $preserve
+     * @param  string $directory
+     * @param  bool   $preserve
+     *
      * @return bool
      */
     public function clean($directory, $preserve = false)
