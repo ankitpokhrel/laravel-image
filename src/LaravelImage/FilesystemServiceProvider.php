@@ -14,7 +14,7 @@ class FilesystemServiceProvider extends LaravelFilesystemServiceProvider
     protected function registerManager()
     {
         $this->app->singleton('laravel-image-filesystem', function () {
-            return new FileSystemManager($this->app);
+            return new FilesystemManager($this->app);
         });
     }
 

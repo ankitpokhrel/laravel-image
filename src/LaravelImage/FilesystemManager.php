@@ -6,7 +6,7 @@ use Dropbox\Client;
 use Illuminate\Filesystem\FilesystemManager as LaravelFilesystemManager;
 use League\Flysystem\Dropbox\DropboxAdapter;
 
-class FileSystemManager extends LaravelFilesystemManager
+class FilesystemManager extends LaravelFilesystemManager
 {
     /**
      * Get the filesystem connection configuration.
