@@ -5,9 +5,7 @@ namespace AnkitPokhrel\LaravelImage\Adapter;
 class Dropbox extends AbstractAdapter
 {
     /**
-     * Get adapter for respective service
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getAdapter()
     {

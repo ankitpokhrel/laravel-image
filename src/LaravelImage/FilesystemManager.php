@@ -9,10 +9,7 @@ use League\Flysystem\Dropbox\DropboxAdapter;
 class FilesystemManager extends LaravelFilesystemManager
 {
     /**
-     * Get the filesystem connection configuration.
-     *
-     * @param  string  $name
-     * @return array
+     * {@inheritdoc}
      */
     protected function getConfig($name)
     {
@@ -20,9 +17,7 @@ class FilesystemManager extends LaravelFilesystemManager
     }
 
     /**
-     * Get the default driver name.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getDefaultDriver()
     {
@@ -30,10 +25,7 @@ class FilesystemManager extends LaravelFilesystemManager
     }
 
     /**
-     * Create an instance of the ftp driver.
-     *
-     * @param  array  $config
-     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     * {@inheritdoc}
      */
     public function createDropboxDriver(array $config)
     {

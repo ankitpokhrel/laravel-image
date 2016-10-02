@@ -5,9 +5,7 @@ namespace AnkitPokhrel\LaravelImage\Adapter;
 class Local extends AbstractAdapter
 {
     /**
-     * Get adapter for respective service
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getAdapter()
     {
@@ -15,7 +13,7 @@ class Local extends AbstractAdapter
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function write($path, $file, $visibility = null)
     {

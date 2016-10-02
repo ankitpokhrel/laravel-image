@@ -38,8 +38,9 @@ class ImageUploadService
      *
      * The directory itself may be optionally preserved.
      *
-     * @param  string  $directory
-     * @param  bool    $preserve
+     * @param string $directory
+     * @param bool   $preserve
+     *
      * @return bool
      */
     public function clean($directory, $preserve = false)

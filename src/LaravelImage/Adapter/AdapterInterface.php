@@ -5,7 +5,7 @@ namespace AnkitPokhrel\LaravelImage\Adapter;
 interface AdapterInterface
 {
     /**
-     * Get adapter for respective service
+     * Get adapter for respective service.
      *
      * @return mixed
      */

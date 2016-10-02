@@ -284,9 +284,9 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Write the contents of a file.
      *
-     * @param  string $path
-     * @param  object $file
-     * @param  string $visibility
+     * @param string $path
+     * @param object $file
+     * @param string $visibility
      *
      * @return bool
      */
@@ -298,7 +298,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Delete the file at a given path.
      *
-     * @param  string|array $paths
+     * @param string|array $paths
      *
      * @return bool
      */
@@ -312,8 +312,8 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * The directory itself may be optionally preserved.
      *
-     * @param  string $directory
-     * @param  bool   $preserve
+     * @param string $directory
+     * @param bool   $preserve
      *
      * @return bool
      */
