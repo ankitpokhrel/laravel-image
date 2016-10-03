@@ -25,7 +25,7 @@ class FilesystemServiceProvider extends LaravelFilesystemServiceProvider
      */
     protected function getDefaultDriver()
     {
-        return $this->app['config']['laravel-image.default'];
+        return $this->app['config']['laravel-image.driver'];
     }
 
     /**

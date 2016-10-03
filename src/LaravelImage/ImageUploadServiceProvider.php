@@ -33,7 +33,7 @@ class ImageUploadServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService', function ($app) {
-            $driver = '\\AnkitPokhrel\\LaravelImage\\Adapter\\' . ucfirst(config('laravel-image.default'));
+            $driver = '\\AnkitPokhrel\\LaravelImage\\Adapter\\' . ucfirst(config('laravel-image.driver'));
 
             $adapter = $app->make($driver);
 
@@ -53,9 +53,10 @@ class ImageUploadServiceProvider extends ServiceProvider
     protected function registerGlide()
     {
         $this->app->singleton('\League\Glide\Server', function ($app) {
-            $fileSystem = $app->make(Filesystem::class);
 
-            $uploadDir = config('laravel-image.upload_dir');
+            $fileSystem = $app->make(Filesystem::class);
+            $uploadDir  = config('laravel-image.upload_dir');
+
             // Set source filesystem
             $source = new LeagueFilesystem(
                 new Local($uploadDir)
@@ -84,7 +85,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $blade->directive('laravelImage', function ($options) {
-            return "<?php echo \\AnkitPokhrel\\LaravelImage\\LaravelImageFacade::image($options);?>";
+            return "<?php echo \\AnkitPokhrel\\LaravelImage\\LaravelImageFacade::image($options); ?>";
         });
     }
 }

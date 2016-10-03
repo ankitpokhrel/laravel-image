@@ -18,6 +18,11 @@ class ImageUploadService
         $this->adapter = $adapter;
     }
 
+    /**
+     * Get current adapter.
+     *
+     * @return AdapterInterface
+     */
     public function getAdapter()
     {
         return $this->adapter;
@@ -52,10 +57,14 @@ class ImageUploadService
      * Set upload field.
      *
      * @param $fieldName
+     *
+     * @return $this
      */
     public function setUploadField($fieldName)
     {
         $this->getAdapter()->setUploadField($fieldName);
+
+        return $this;
     }
 
     /**
@@ -63,20 +72,28 @@ class ImageUploadService
      *
      * @param $path
      * @param $absolute
+     *
+     * @return $this
      */
     public function setBasePath($path, $absolute = false)
     {
         $this->getAdapter()->setBasePath($path, $absolute);
+
+        return $this;
     }
 
     /**
      * Set upload folder.
      *
      * @param $folder
+     *
+     * @return $this
      */
     public function setUploadFolder($folder)
     {
         $this->getAdapter()->setUploadFolder($folder);
+
+        return $this;
     }
 
     /**

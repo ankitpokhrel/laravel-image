@@ -1,6 +1,6 @@
 {
   "name": "ankitpokhrel/laravel-image",
-  "description": "Easy image upload and thumbnail management",
+  "description": "Basic image upload and thumbnail management library for laravel 5+",
   "license": "MIT",
   "authors": [
     {
@@ -13,7 +13,8 @@
     "laravel/framework": "5.3.*",
     "league/glide-laravel": "^1.0",
     "phpunit/phpunit": "5.5.*",
-    "league/flysystem-dropbox": "^1.0"
+    "league/flysystem-dropbox": "^1.0",
+    "league/flysystem-aws-s3-v3": "^1.0"
   },
   "require-dev": {
     "mockery/mockery": "dev-master",

@@ -21,11 +21,14 @@ class FilesystemManager extends LaravelFilesystemManager
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['laravel-image.default'];
+        return $this->app['config']['laravel-image.driver'];
     }
 
     /**
-     * {@inheritdoc}
+     * Create an instance of the dropbox driver.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
     public function createDropboxDriver(array $config)
     {

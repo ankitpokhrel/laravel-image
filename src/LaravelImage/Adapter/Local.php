@@ -9,7 +9,7 @@ class Local extends AbstractAdapter
      */
     public function getAdapter()
     {
-        return app('laravel-image-filesystem')->disk('public');
+        return app('laravel-image-filesystem')->disk('local');
     }
 
     /**

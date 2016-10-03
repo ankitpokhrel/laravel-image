@@ -15,7 +15,7 @@ return [
    |
    */
 
-    'default' => 'local',
+    'driver' => 'ftp',
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return [
 
     'disks' => [
 
-        'public' => [
+        'local' => [
             'driver'     => 'local',
             'root'       => public_path('uploads'),
             'visibility' => 'public',
