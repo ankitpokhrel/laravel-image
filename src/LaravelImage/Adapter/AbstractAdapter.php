@@ -296,6 +296,19 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
+     * Get the contents of a file.
+     *
+     * @param  string  $path
+     * @return string
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function get($path)
+    {
+        return $this->getAdapter()->get($path);
+    }
+
+    /**
      * Delete the file at a given path.
      *
      * @param string|array $paths

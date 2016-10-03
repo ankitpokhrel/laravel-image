@@ -39,6 +39,19 @@ class ImageUploadService
     }
 
     /**
+     * Get the contents of a file.
+     *
+     * @param  string  $path
+     * @return string
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function get($path)
+    {
+        return $this->getAdapter()->get($path);
+    }
+
+    /**
      * Recursively delete a directory.
      *
      * The directory itself may be optionally preserved.
