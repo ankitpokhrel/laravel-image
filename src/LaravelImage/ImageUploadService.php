@@ -41,10 +41,11 @@ class ImageUploadService
     /**
      * Get the contents of a file.
      *
-     * @param  string  $path
-     * @return string
+     * @param string $path
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return string
      */
     public function get($path)
     {

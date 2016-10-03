@@ -53,7 +53,6 @@ class ImageUploadServiceProvider extends ServiceProvider
     protected function registerGlide()
     {
         $this->app->singleton('\League\Glide\Server', function ($app) {
-
             $fileSystem = $app->make(Filesystem::class);
             $uploadDir  = config('laravel-image.upload_dir');
 

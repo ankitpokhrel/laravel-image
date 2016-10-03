@@ -27,7 +27,8 @@ class FilesystemManager extends LaravelFilesystemManager
     /**
      * Create an instance of the dropbox driver.
      *
-     * @param  array  $config
+     * @param array $config
+     *
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
     public function createDropboxDriver(array $config)
