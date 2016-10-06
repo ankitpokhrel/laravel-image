@@ -2,7 +2,7 @@
 
 namespace AnkitPokhrel\LaravelImage;
 
-use AnkitPokhrel\LaravelImage\Adapter\AdapterInterface;
+use AnkitPokhrel\LaravelImage\Adapters\AdapterInterface;
 
 /**
  * Handles all image upload operation.

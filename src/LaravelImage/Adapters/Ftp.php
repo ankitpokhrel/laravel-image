@@ -1,6 +1,6 @@
 <?php
 
-namespace AnkitPokhrel\LaravelImage\Adapter;
+namespace AnkitPokhrel\LaravelImage\Adapters;
 
 class Ftp extends AbstractAdapter
 {

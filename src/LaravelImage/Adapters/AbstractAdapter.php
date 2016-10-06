@@ -1,8 +1,8 @@
 <?php
 
-namespace AnkitPokhrel\LaravelImage\Adapter;
+namespace AnkitPokhrel\LaravelImage\Adapters;
 
-use AnkitPokhrel\LaravelImage\Util\UniquableTrait;
+use AnkitPokhrel\LaravelImage\Utils\UniquableTrait;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace AnkitPokhrel\LaravelImage\Util;
+namespace AnkitPokhrel\LaravelImage\Utils;
 
 trait UniquableTrait
 {

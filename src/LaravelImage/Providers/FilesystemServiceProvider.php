@@ -1,7 +1,8 @@
 <?php
 
-namespace AnkitPokhrel\LaravelImage;
+namespace AnkitPokhrel\LaravelImage\Providers;
 
+use AnkitPokhrel\LaravelImage\FilesystemManager;
 use Illuminate\Filesystem\FilesystemServiceProvider as LaravelFilesystemServiceProvider;
 
 class FilesystemServiceProvider extends LaravelFilesystemServiceProvider

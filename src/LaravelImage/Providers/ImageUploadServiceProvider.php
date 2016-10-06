@@ -1,11 +1,14 @@
 <?php
 
-namespace AnkitPokhrel\LaravelImage;
+namespace AnkitPokhrel\LaravelImage\Providers;
 
+use AnkitPokhrel\LaravelImage\ImageHelper;
+use AnkitPokhrel\LaravelImage\ImageUploadService;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem as LeagueFilesystem;
 use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\Server;
 use League\Glide\ServerFactory;
 
 class ImageUploadServiceProvider extends ServiceProvider
@@ -16,11 +19,11 @@ class ImageUploadServiceProvider extends ServiceProvider
     public function boot()
     {
         if ( ! $this->app->routesAreCached()) {
-            require __DIR__ . '/routes.php';
+            require __DIR__ . '/../routes.php';
         }
 
         $this->publishes([
-            __DIR__ . '/../config/config.php' => config_path('laravel-image.php'),
+            __DIR__ . '/../../config/config.php' => config_path('laravel-image.php'),
         ]);
 
         $this->registerBladeExtensions();
@@ -31,8 +34,8 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('\AnkitPokhrel\LaravelImage\ImageUploadService', function ($app) {
-            $driver = '\\AnkitPokhrel\\LaravelImage\\Adapter\\' . ucfirst(config('laravel-image.driver'));
+        $this->app->bind(ImageUploadService::class, function ($app) {
+            $driver = '\\AnkitPokhrel\\LaravelImage\\Adapters\\' . ucfirst(config('laravel-image.driver'));
 
             $adapter = $app->make($driver);
 
@@ -40,7 +43,7 @@ class ImageUploadServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('laravelImage', function () {
-            return $this->app->make('\AnkitPokhrel\LaravelImage\ImageHelper');
+            return $this->app->make(ImageHelper::class);
         });
 
         $this->registerGlide();
@@ -51,7 +54,7 @@ class ImageUploadServiceProvider extends ServiceProvider
      */
     protected function registerGlide()
     {
-        $this->app->singleton('\League\Glide\Server', function ($app) {
+        $this->app->singleton(Server::class, function ($app) {
             // Set source filesystem
             $source = app('laravel-image-filesystem')->getDriver();
 
