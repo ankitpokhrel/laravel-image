@@ -2,7 +2,6 @@
 
 namespace AnkitPokhrel\LaravelImage;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem as LeagueFilesystem;
@@ -53,24 +52,19 @@ class ImageUploadServiceProvider extends ServiceProvider
     protected function registerGlide()
     {
         $this->app->singleton('\League\Glide\Server', function ($app) {
-            $fileSystem = $app->make(Filesystem::class);
-            $uploadDir  = config('laravel-image.upload_dir');
-
             // Set source filesystem
-            $source = new LeagueFilesystem(
-                new Local($uploadDir)
-            );
+            $source = app('laravel-image-filesystem')->getDriver();
 
             // Set cache filesystem
             $cache = new LeagueFilesystem(
-                new Local($fileSystem->getDriver()->getAdapter()->getPathPrefix() . '/cache/laravel-image')
+                new Local(storage_path('/cache/laravel-image'))
             );
 
             // Setup glide server
             return ServerFactory::create([
                 'source'   => $source,
                 'cache'    => $cache,
-                'base_url' => config('laravel-image.route_path') . '/' . basename($uploadDir),
+                'base_url' => config('laravel-image.route_path') . '/' . basename(config('laravel-image.upload_dir')),
                 'response' => new LaravelResponseFactory(),
             ]);
         });
