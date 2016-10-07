@@ -2,20 +2,19 @@
 
 return [
 
-   /*
-   |--------------------------------------------------------------------------
-   | Default Filesystem Disk For Laravel Image
-   |--------------------------------------------------------------------------
-   |
-   | Here you may specify the default filesystem disk that should be used
-   | by the package. A "local" driver, as well as a variety of cloud
-   | based drivers are available for your choosing. Just store away!
-   |
-   | Supported: "local", "dropbox", "s3"
-   |
-   */
-
-    'driver' => 'ftp',
+    /*
+    |--------------------------------------------------------------------------
+    | Default Filesystem Disk For Laravel Image
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default filesystem disk that should be used
+    | by the package. A "local" driver, as well as a variety of cloud
+    | based drivers are available for your choosing. Just store away!
+    |
+    | Supported: "local", "dropbox", "s3", "ftp"
+    |
+    */
+    'driver' => 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +26,6 @@ return [
     | will be bound as the Cloud disk implementation in the container.
     |
     */
-
     'cloud' => 's3',
 
     /*
@@ -40,7 +38,6 @@ return [
     | been setup for each driver as an example of the required options.
     |
     */
-
     'disks' => [
 
         'local' => [
@@ -63,6 +60,20 @@ return [
             'secret' => 'your-secret',
         ],
 
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => 'ftp.example.com',
+            'username' => 'your-username',
+            'password' => 'your-password',
+
+            /** optional config settings */
+            'port'     => 21,
+            'root'     => '/',
+            'passive'  => true,
+            'ssl'      => false,
+            'timeout'  => 30,
+        ],
+
     ],
 
     /*
@@ -72,7 +83,7 @@ return [
      |
      | Your upload directory
      */
-    'upload_dir'          => public_path('uploads'),
+    'upload_dir' => public_path('uploads'),
 
     /*
      |--------------------------------------------------------------------------
@@ -81,7 +92,7 @@ return [
      |
      | Your route prefix for glide
      */
-    'route_path'          => 'laravel-image',
+    'route_path' => 'laravel-image',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +102,7 @@ return [
     | This option registers the default validation rules to apply while
     | uploading images.
     */
-    'validation_rules'    => 'mimes:jpeg,jpg,png|max:2048', //2mb
+    'validation_rules' => 'mimes:jpeg,jpg,png|max:2048', //2mb
 
     /*
     |--------------------------------------------------------------------------
@@ -100,8 +111,8 @@ return [
     |
     | Fields to treat as image fields. Required for validation.
     */
-    'image_fields'        => [
-        'image',
+    'image_fields' => [
+        'image', 'avatar'
     ],
 
     /*
