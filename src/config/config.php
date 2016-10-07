@@ -11,9 +11,10 @@ return [
     | by the package. A "local" driver, as well as a variety of cloud
     | based drivers are available for your choosing. Just store away!
     |
-    | Supported: "local", "dropbox", "s3", "ftp"
+    | Supported: "local", "dropbox", "s3", "ftp", "rackspace"
     |
     */
+
     'driver' => 'local',
 
     /*
@@ -26,6 +27,7 @@ return [
     | will be bound as the Cloud disk implementation in the container.
     |
     */
+
     'cloud' => 's3',
 
     /*
@@ -38,6 +40,7 @@ return [
     | been setup for each driver as an example of the required options.
     |
     */
+
     'disks' => [
 
         'local' => [
@@ -66,7 +69,7 @@ return [
             'username' => 'your-username',
             'password' => 'your-password',
 
-            /** optional config settings */
+            /* optional config settings */
             'port'     => 21,
             'root'     => '/',
             'passive'  => true,
@@ -78,20 +81,12 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | File upload directory
-     |--------------------------------------------------------------------------
-     |
-     | Your upload directory
-     */
-    'upload_dir' => public_path('uploads'),
-
-    /*
-     |--------------------------------------------------------------------------
      | Route prefix
      |--------------------------------------------------------------------------
      |
      | Your route prefix for glide
      */
+
     'route_path' => 'laravel-image',
 
     /*
@@ -101,7 +96,9 @@ return [
     |
     | This option registers the default validation rules to apply while
     | uploading images.
+    |
     */
+
     'validation_rules' => 'mimes:jpeg,jpg,png|max:2048', //2mb
 
     /*
@@ -111,8 +108,10 @@ return [
     |
     | Fields to treat as image fields. Required for validation.
     */
+
     'image_fields' => [
-        'image', 'avatar'
+        'image',
+        'avatar',
     ],
 
     /*
@@ -121,7 +120,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Validation error messages. Must be in format field.validationName.
+    |
     */
+
     'validation_messages' => [
         'image.max'   => 'Image may not be greater than 2 MB',
         'image.mimes' => 'Invalid image format. Please enter jpeg or png image.',

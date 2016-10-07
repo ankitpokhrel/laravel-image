@@ -67,7 +67,7 @@ class ImageUploadServiceProvider extends ServiceProvider
             return ServerFactory::create([
                 'source'   => $source,
                 'cache'    => $cache,
-                'base_url' => config('laravel-image.route_path') . '/' . basename(config('laravel-image.upload_dir')),
+                'base_url' => config('laravel-image.route_path'),
                 'response' => new LaravelResponseFactory(),
             ]);
         });
