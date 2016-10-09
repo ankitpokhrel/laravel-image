@@ -10,11 +10,14 @@ class ImageHelper
         'class' => null,
     ];
 
+    /** @var array Default options */
     protected $options = [
         'fit' => 'crop-center',
     ];
 
     /**
+     * Display image using glide route.
+     *
      * @param $dir string Directory to search
      * @param string $image   Image name
      * @param null   $width
@@ -28,7 +31,7 @@ class ImageHelper
         $attributes = array_replace_recursive($this->attributes, $attributes);
         $options    = array_replace_recursive($this->options, $options);
 
-        $path = config('laravel-image.routePath') . '/' . $dir . $image . '?' . http_build_query($options, '', '&');
+        $path = config('laravel-image.route_path') . '/' . $dir . $image . '?' . http_build_query($options, '', '&');
 
         if ( ! empty((int) $width)) {
             $path .= '&w=' . (int) $width;
