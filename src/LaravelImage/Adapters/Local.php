@@ -23,4 +23,12 @@ class Local extends AbstractAdapter
 
         return parent::write($path, $file, $visibility);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUploadFolder()
+    {
+        return $this->getAbsolutePath() ? $this->uploadFolder : public_path($this->uploadFolder);
+    }
 }

@@ -261,12 +261,11 @@ abstract class AbstractAdapter implements AdapterInterface
 
         $originalFileName  = $file->getClientOriginalName();
         $encryptedFileName = $this->getUniqueFilename($originalFileName);
-        $uploadFolder      = $this->getUploadFolder();
 
         $uploadedFileInfo = [
             $this->originalImageNameField => $originalFileName,
             $this->field                  => $encryptedFileName,
-            $this->uploadDir              => $this->getAbsolutePath() ? $uploadFolder : public_path($uploadFolder),
+            $this->uploadDir              => $this->getUploadFolder(),
             'size'                        => $file->getSize(),
             'extension'                   => $file->getClientOriginalExtension(),
             'mime_type'                   => $file->getMimeType(),
